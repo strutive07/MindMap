@@ -3,6 +3,11 @@ package layout;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
@@ -10,15 +15,34 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import util.AutoLabel;
 import util.ColorTable;
-
+import IO.treeIO;
 public class TextEditorPane extends JPanel{
 	/**
 	 * 
 	 */
+
+	private void dfs(treeIO node){
+		if(node.get_child_number_in_parent() == -1){
+			System.out.println("Root 입니다. : " + node.getStringName());
+		}else{
+			System.out.println("부모 : " + node.getParent().getStringName() + " : " + node.getStringName());
+		}
+		for (int i=0; i<node.getChildCount(); i++){
+			treeIO next_node = node.getChildAt(i);
+			if(next_node != null){
+				dfs(next_node);
+			}
+		}
+	}
+
+
+
 	private static final long serialVersionUID = 1L;
 	JLabel TopLabel;
 	JTextArea textArea;
 	JButton ApplyButton;
+	ArrayList< treeIO> root_list = new ArrayList<treeIO>();
+
 	public TextEditorPane(int size) {
 		this.setLayout(new BorderLayout());
 
@@ -46,18 +70,109 @@ public class TextEditorPane extends JPanel{
 		this.setBackground(ColorTable.PaneBackground_blue1);
 
 		ApplyButton.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//				super.mousePressed(e);
+//				String treeText[] = textArea.getText().split("[\n]");
+//				Stack<String> st = new Stack<String>();
+//				String first_root = treeText[0];
+//				st.push(first_root);
+//
+//				//트리 만들기. 이걸 루트로
+//				for (int i=0; i<treeText.length; i++){
+//					System.out.println("ho : " + treeText[i]);
+//				}
+//			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
-				String treeText[] = textArea.getText().split("\t\n");
-				for (int i=0; i<treeText.length; i++){
-					System.out.println("ho : " + treeText[i]);
+				String treeText[] = textArea.getText().split("[\n]");
+				Stack<Pair<Integer, treeIO>> st = new Stack<Pair<Integer, treeIO>>();
+
+				treeIO root = new treeIO(treeText[0]);
+				Pair<Integer, treeIO> first_root = new Pair<Integer, treeIO>(0, root);
+
+				st.push(first_root);
+
+				root_list.add(root);
+
+
+
+
+				//트리 만들기. 이걸 루트로
+				for (int i=1; i<treeText.length; i++){
+					int tab_cnt = 0;
+					for (int j=0; j<treeText[i].length(); j++){
+						if(treeText[i].charAt(j) == '\t'){
+							tab_cnt++;
+						}
+					}
+					treeText[i] = treeText[i].substring(tab_cnt,treeText[i].length());
+					if(st.peek().left < tab_cnt){
+						treeIO node = new treeIO(treeText[i]);
+						st.peek().right.push_child(node);
+						Pair<Integer, treeIO> next_node = new Pair<Integer, treeIO>(tab_cnt, node);
+						st.push(next_node);
+					}else if(st.peek().left == tab_cnt){
+						st.pop();
+						treeIO node = new treeIO(treeText[i]);
+						if(st.empty()){
+							root_list.add(node);
+						}else{
+							st.peek().right.push_child(node);
+						}
+
+						Pair<Integer, treeIO> next_node = new Pair<Integer, treeIO>(tab_cnt, node);
+						st.push(next_node);
+
+					}else{
+						while(!st.empty()){
+							if(st.peek().left == 0){
+								st.pop();
+								treeIO another_root = new treeIO(treeText[i]);
+								Pair<Integer, treeIO> next_node = new Pair<Integer, treeIO>(tab_cnt, another_root);
+								st.push(next_node);
+								root_list.add(another_root);
+								break;
+							}
+							if(st.peek().left > tab_cnt){
+								st.pop();
+							}else if(st.peek().left == tab_cnt){
+								st.pop();
+								treeIO node = new treeIO(treeText[i]);
+								if(st.empty()){
+									root_list.add(node);
+								}else{
+									st.peek().right.push_child(node);
+								}
+								Pair<Integer, treeIO> next_node = new Pair<Integer, treeIO>(tab_cnt, node);
+								st.push(next_node);
+								break;
+							}
+						}
+					}
+					System.out.println("cnt : " + tab_cnt + " ho : " + treeText[i]);
 				}
+				dfs(root_list.get(0));
 			}
 		});
 	}
 
 	public void setTopLabelFontSize(int size){
 		AutoLabel.setLabelFontSize(TopLabel, size);
+	}
+}
+
+class Pair<L,R> {
+	final L left;
+	final R right;
+
+	public Pair(L left, R right) {
+		this.left = left;
+		this.right = right;
+	}
+
+	static <L,R> Pair<L,R> of(L left, R right){
+		return new Pair<L,R>(left, right);
 	}
 }
