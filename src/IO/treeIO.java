@@ -54,7 +54,6 @@ public class treeIO{
     private int null_cnt = 0;
     private int child_number_in_parent = -1;
     private treeIO parent = null;
-    private
 
     ArrayList<treeIO> children = new ArrayList<treeIO>();
 
