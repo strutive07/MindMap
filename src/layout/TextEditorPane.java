@@ -41,7 +41,7 @@ public class TextEditorPane extends JPanel{
 	JLabel TopLabel;
 	JTextArea textArea;
 	JButton ApplyButton;
-	ArrayList< treeIO> root_list = new ArrayList<treeIO>();
+	ArrayList<treeIO> root_list = new ArrayList<treeIO>();
 
 	public TextEditorPane(int size) {
 		this.setLayout(new BorderLayout());
@@ -70,19 +70,7 @@ public class TextEditorPane extends JPanel{
 		this.setBackground(ColorTable.PaneBackground_blue1);
 
 		ApplyButton.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mousePressed(MouseEvent e) {
-//				super.mousePressed(e);
-//				String treeText[] = textArea.getText().split("[\n]");
-//				Stack<String> st = new Stack<String>();
-//				String first_root = treeText[0];
-//				st.push(first_root);
-//
-//				//트리 만들기. 이걸 루트로
-//				for (int i=0; i<treeText.length; i++){
-//					System.out.println("ho : " + treeText[i]);
-//				}
-//			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
@@ -154,6 +142,7 @@ public class TextEditorPane extends JPanel{
 					System.out.println("cnt : " + tab_cnt + " ho : " + treeText[i]);
 				}
 				dfs(root_list.get(0));
+				IO.fileIO.export_Tree(root_list);
 			}
 		});
 	}

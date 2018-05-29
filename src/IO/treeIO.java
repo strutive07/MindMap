@@ -7,9 +7,55 @@ import java.util.Enumeration;
 
 public class treeIO{
     private String name;
+    private double w, h;
+    private double x, y;
+    private int LabelColor;
+
+    public double getW() {
+        return w;
+    }
+
+    public void setW(double w) {
+        this.w = w;
+    }
+
+    public double getH() {
+        return h;
+    }
+
+    public void setH(double h) {
+        this.h = h;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public int getLabelColor() {
+        return LabelColor;
+    }
+
+    public void setLabelColor(int labelColor) {
+        LabelColor = labelColor;
+    }
+
     private int null_cnt = 0;
     private int child_number_in_parent = -1;
     private treeIO parent = null;
+    private
+
     ArrayList<treeIO> children = new ArrayList<treeIO>();
 
     public treeIO(String name){
