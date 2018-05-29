@@ -9,6 +9,7 @@ public class treeIO{
     private String name;
     private double w, h;
     private double x, y;
+    private int Tree_depth;
     private int LabelColor;
 
     public double getW() {
@@ -117,5 +118,13 @@ public class treeIO{
         }else{
             return false;
         }
+    }
+
+    public int getTree_depth(){
+        return Tree_depth;
+    }
+
+    public void setTree_depth(int n){
+        Tree_depth=n;
     }
 }
