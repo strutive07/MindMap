@@ -9,6 +9,7 @@ public class treeIO{
     private String name;
     private double w, h;
     private double x, y;
+    private int Tree_depth;
     private int LabelColor;
 
     public double getW() {
@@ -54,7 +55,6 @@ public class treeIO{
     private int null_cnt = 0;
     private int child_number_in_parent = -1;
     private treeIO parent = null;
-    private
 
     ArrayList<treeIO> children = new ArrayList<treeIO>();
 
@@ -118,5 +118,13 @@ public class treeIO{
         }else{
             return false;
         }
+    }
+
+    public int getTree_depth(){
+        return Tree_depth;
+    }
+
+    public void setTree_depth(int n){
+        Tree_depth=n;
     }
 }
