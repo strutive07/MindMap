@@ -16,6 +16,8 @@ import javax.swing.border.LineBorder;
 import util.AutoLabel;
 import util.ColorTable;
 import IO.treeIO;
+import layout.MainLayout;
+
 public class TextEditorPane extends JPanel{
 	/**
 	 * 
@@ -41,11 +43,11 @@ public class TextEditorPane extends JPanel{
 	JLabel TopLabel;
 	JTextArea textArea;
 	JButton ApplyButton;
-	ArrayList<treeIO> root_list = new ArrayList<treeIO>();
+	ArrayList<treeIO> root_list;
 
 	public TextEditorPane(int size) {
 		this.setLayout(new BorderLayout());
-
+		root_list = MainLayout.getTree();
 		TopLabel = new JLabel("Text Editor Pane");
 		textArea = new JTextArea();
 		textArea.setTabSize(2);
