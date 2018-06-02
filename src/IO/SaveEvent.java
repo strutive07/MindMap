@@ -19,6 +19,7 @@ public class SaveEvent implements ActionListener{
                 break;
         }
     }
+
     private void saveMethod(){
         System.out.println("SaveMethod 호출");
         ArrayList<treeIO> root_list = MainLayout.getTree();

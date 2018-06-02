@@ -94,7 +94,8 @@ public class MainFrame extends JFrame{
         rightPanel = new AttributePane((int)this.getSize().getWidth()/6);
         JScrollPane rightScrollPanel = new JScrollPane(rightPanel);
         
-        
+
+
 
         sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);

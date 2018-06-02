@@ -20,6 +20,7 @@ public class DisplayLabel {
     private void printNode(treeIO node){
         System.out.println("name : " + node.getStringName() + "   |    x : " + node.getX() + "   |    y : " + node.getY() + "   |    w : " + node.getW() + "   |    h : " + node.getH() + "   |    LableColor : " + node.getLabelColor());
 
+
         for(int i=0; i<node.getChildCount(); i++){
             printNode(node.getChildAt(i));
         }

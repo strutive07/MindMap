@@ -97,6 +97,7 @@ public class treeIO{
         child.set_child_number_in_parent(children.size() - 1);
     }
 
+
     public void delete_child(treeIO child){
         parent.children.set(child_number_in_parent, null);
         null_cnt++;

@@ -27,6 +27,7 @@ public class AutoLabel {
         }
     }
 
+
     public static void setLabelFontSize_Negative(JLabel label, int size){
         int font_size = label.getFont().getSize();
         while(true){

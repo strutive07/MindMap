@@ -14,6 +14,7 @@ public class SetPosition {
         root_list=layout.MainLayout.getTree();
     }
 
+
     public void start_SetPosition() {
         if (root_list.size() == 1)
             make_grahp();

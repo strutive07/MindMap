@@ -162,6 +162,7 @@ public class TextEditorPane extends JPanel{
 	}
 }
 
+
 class Pair<L,R> {
 	final L left;
 	final R right;
