@@ -9,9 +9,11 @@ import java.util.Queue;
 
 public class SetPosition {
     ArrayList<treeIO> root_list;
-
-    public SetPosition(){
+    double panelWeight, panelHeight;
+    public SetPosition(double panelWeight, double panelHeight){
         root_list=layout.MainLayout.getTree();
+        this.panelWeight = panelWeight;
+        this.panelHeight = panelHeight;
     }
 
     public void start_SetPosition() {
@@ -34,15 +36,17 @@ public class SetPosition {
 
         q.offer(now_node);
 
-        now_node.setX(1280/2);
-        now_node.setY(640/2);
+        now_node.setX(panelWeight/2);
+        now_node.setY(panelHeight/2);
+        now_node.setW(50);
+        now_node.setH(50);
 
         while (!q.isEmpty()){
             now_node=(IO.treeIO)q.peek();
             int sibling_cnt=now_node.getChildCount();
 
             double X,Y;
-            int length=10;//여기 뭐 들어가야할지 그려보면서 실험
+            int length=100;//여기 뭐 들어가야할지 그려보면서 실험
             int cnt=0;
             X=now_node.getX();
             Y=now_node.getY();
@@ -70,8 +74,8 @@ public class SetPosition {
                 q.offer(now_node.getChildAt(i));
                 now_node.getChildAt(i).setX(X+Math.cos(angle)*length);
                 now_node.getChildAt(i).setY(Y+Math.sin(angle)*length);
-                now_node.getChildAt(i).setW(1);
-                now_node.getChildAt(i).setH(1);//여기 있는 것들은 차후 width,height값에 따라 변경
+                now_node.getChildAt(i).setW(50);
+                now_node.getChildAt(i).setH(50);//여기 있는 것들은 차후 width,height값에 따라 변경
             }
 
             q.poll();

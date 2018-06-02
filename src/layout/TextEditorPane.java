@@ -145,14 +145,13 @@ public class TextEditorPane extends JPanel{
 					}
 					System.out.println("cnt : " + tab_cnt + " ho : " + treeText[i]);
 				}
-                SetPosition setPosition = new SetPosition();
+
+				JPanel centerPanel = MainLayout.getCenterPanel();
+                SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
 				setPosition.start_SetPosition();
+
 				DisplayLabel displayLabel = new DisplayLabel();
 				displayLabel.display();
-
-//				dfs(root_list.get(0));
-//				IO.fileIO.export_Tree(root_list);
-//				dfs(root_list.get(0));
 			}
 		});
 	}
