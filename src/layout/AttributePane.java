@@ -20,6 +20,7 @@ public class AttributePane extends JPanel{
 	GridBagLayout gridBagLayout;
 	JPanel grid;
 
+
 	public AttributePane(int size) {
 		this.setLayout(new BorderLayout());
 

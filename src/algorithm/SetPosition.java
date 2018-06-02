@@ -25,6 +25,7 @@ public class SetPosition {
 
     }
 
+
     public void make_grahp(){
         int child_cnt;
         int tree_height=getTreeHeight(root_list.get(0));

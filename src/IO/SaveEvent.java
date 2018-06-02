@@ -24,6 +24,7 @@ public class SaveEvent implements ActionListener{
         ArrayList<treeIO> root_list = MainLayout.getTree();
         fileIO.export_Tree(root_list);
     }
+
     private void loadMethod(){
         System.out.println("load 호출");
         fileIO.import_Json("OutPut.json");

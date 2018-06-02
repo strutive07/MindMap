@@ -12,3 +12,4 @@ public class ColorTable {
 	public static final Color ApplyButton_Red = new Color(176, 35, 24);
 	
 }
+

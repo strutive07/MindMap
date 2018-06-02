@@ -112,6 +112,7 @@ public class treeIO{
     }
 
 
+
     public boolean isLeaf() {
         if(children.size() - null_cnt == 0){
             return true;

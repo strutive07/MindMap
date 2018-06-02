@@ -160,6 +160,7 @@ public class TextEditorPane extends JPanel{
 	public void setTopLabelFontSize(int size){
 		AutoLabel.setLabelFontSize(TopLabel, size);
 	}
+
 }
 
 class Pair<L,R> {

@@ -100,7 +100,8 @@ public class MainFrame extends JFrame{
         sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         sp.setLeftComponent(leftScrollPanel);
         sp.setRightComponent(centerScrollPanel);
-        
+
+
         sp2.setLeftComponent(sp);
         sp2.setRightComponent(rightScrollPanel);
         
