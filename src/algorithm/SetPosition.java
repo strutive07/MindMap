@@ -48,7 +48,9 @@ public class SetPosition {
 
             int sibling_num=number_of_sibiling(now_node);
             int num=now_node.get_child_number_in_parent();
-            double lim_angle=(num/sibling_num)*Math.PI;
+            double lim_angle=(1/sibling_num)*Math.PI;
+            if (lim_angle>Math.PI/3)
+                lim_angle=Math.PI/3;
 
             for (int i=0;i<sibling_cnt;i++){
 
@@ -60,9 +62,9 @@ public class SetPosition {
                 double angle;
 
                 if (sibling_cnt==1)
-                    angle=lim_angle;
+                    angle=(num/sibling_num)*Math.PI;
                 else
-                    angle=(lim_angle/2)+(lim_angle/(sibling_cnt-1))*i;
+                    angle=(lim_angle*num-lim_angle/2)+(lim_angle/(sibling_cnt-1))*i;
 
                 q.offer(now_node.getChildAt(i));
                 now_node.getChildAt(i).setX(X+Math.cos(angle)*length);
