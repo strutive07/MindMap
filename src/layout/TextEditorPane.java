@@ -144,8 +144,8 @@ public class TextEditorPane extends JPanel{
 					System.out.println("cnt : " + tab_cnt + " ho : " + treeText[i]);
 				}
 //				dfs(root_list.get(0));
-				IO.fileIO.export_Tree(root_list);
-				dfs(root_list.get(0));
+//				IO.fileIO.export_Tree(root_list);
+//				dfs(root_list.get(0));
 			}
 		});
 	}

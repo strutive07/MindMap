@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
+
+import IO.SaveEvent;
 import util.ColorTable;
 
 public class MainFrame extends JFrame{
@@ -23,6 +25,7 @@ public class MainFrame extends JFrame{
 	TextEditorPane leftPanel;
 	JPanel centerPanel;
 	AttributePane rightPanel;
+
 
 
 	public MainFrame(){
@@ -41,14 +44,21 @@ public class MainFrame extends JFrame{
 			}
 		});
 		setVisible(true);
-		
-		
 	}
 	private void createMenu() {
+		SaveEvent saveEvent = new SaveEvent();
 		JMenuBar menuBar = new JMenuBar();
 		JMenu filemenu = new JMenu("파일");
-		filemenu.add(new JMenuItem("저장"));
-		filemenu.add(new JMenuItem("불러오기"));
+		JMenuItem saveItem = new JMenuItem("저장");
+
+		saveItem.addActionListener(saveEvent);
+
+		JMenuItem loadItem = new JMenuItem("불러오기");
+
+		loadItem.addActionListener(saveEvent);
+
+		filemenu.add(saveItem);
+		filemenu.add(loadItem);
 		menuBar.add(filemenu);
 		
 		menuBar.setBackground(ColorTable.MenuBar_blue);
@@ -99,6 +109,7 @@ public class MainFrame extends JFrame{
         this.add(sp2, BorderLayout.CENTER);
         
 	}
+
 
 	private void JFrameResize(){
 		sp.setDividerLocation((int)this.getSize().getWidth()/6);
