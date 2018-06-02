@@ -49,23 +49,23 @@ public class SetPosition {
 
             int sibling_num=number_of_sibiling(now_node);
             int num=now_node.get_child_number_in_parent();
-            double lim_angle=(1/sibling_num)*Math.PI;
-            if (lim_angle>Math.PI/3)
-                lim_angle=Math.PI/3;
+            double lim_angle=((double)1/(double)sibling_num)*Math.PI*2;
+            if (lim_angle>Math.PI*2/3.0)
+                lim_angle=Math.PI*2/3.0;
 
             for (int i=0;i<sibling_cnt;i++){
-
-                if (now_node.getChildAt(i)==null)
-                    continue;
-                else
-                    cnt++;
-
                 double angle;
 
-                if (sibling_cnt==1)
-                    angle=(num/sibling_num)*Math.PI;
-                else
-                    angle=(lim_angle*num-lim_angle/2)+(lim_angle/(sibling_cnt-1))*i;
+                if (now_node.get_child_number_in_parent()==-1)
+                    angle=((double)i/(double)sibling_cnt)*Math.PI*2;
+                else {
+                    if (sibling_cnt == 1)
+                        angle = ((double) num / (double) sibling_num) * Math.PI * 2;
+                    else {
+                        angle = ( - lim_angle / 2.0) + (lim_angle / (double)(sibling_cnt - 1)) * i;
+                        System.out.println(lim_angle);
+                    }
+                }
 
                 q.offer(now_node.getChildAt(i));
                 now_node.getChildAt(i).setX(X+Math.cos(angle)*length);
@@ -100,8 +100,8 @@ public class SetPosition {
         return MAX;
     }
 
-    public int number_of_sibiling(treeIO node){
-        if (node.get_child_number_in_parent()==-1)
+    public int number_of_sibiling(treeIO node) {
+        if (node.get_child_number_in_parent() == -1)
             return -1;
         else
             return node.getParent().getChildCount();
