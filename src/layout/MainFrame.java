@@ -17,6 +17,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 
 import IO.SaveEvent;
+import sun.plugin.javascript.JSContext;
 import util.ColorTable;
 
 public class MainFrame extends JFrame{
@@ -25,6 +26,7 @@ public class MainFrame extends JFrame{
 	TextEditorPane leftPanel;
 	JPanel centerPanel;
 	AttributePane rightPanel;
+
 
 
 
@@ -83,8 +85,11 @@ public class MainFrame extends JFrame{
 		JScrollPane leftScrollPanel = new JScrollPane(leftPanel);
 		
 		
+        JPanel centerPanel = MainLayout.getCenterPane();
         centerPanel = new JPanel();
         centerPanel.setBackground(ColorTable.PaneBackground_blue2);
+        JScrollPane centerScrollPanel = new JScrollPane();
+        centerScrollPanel = new JScrollPane(centerPanel);
 
         rightPanel = new AttributePane((int)this.getSize().getWidth()/6);
         JScrollPane rightScrollPanel = new JScrollPane(rightPanel);
@@ -94,7 +99,7 @@ public class MainFrame extends JFrame{
         sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         sp.setLeftComponent(leftScrollPanel);
-        sp.setRightComponent(centerPanel);
+        sp.setRightComponent(centerScrollPanel);
         
         sp2.setLeftComponent(sp);
         sp2.setRightComponent(rightScrollPanel);
@@ -110,8 +115,7 @@ public class MainFrame extends JFrame{
         
 	}
 
-
-	private void JFrameResize(){
+    private void JFrameResize(){
 		sp.setDividerLocation((int)this.getSize().getWidth()/6);
 		sp2.setDividerLocation((int)this.getSize().getWidth() - (int)this.getSize().getWidth()/6);
 		leftPanel.setTopLabelFontSize((int)this.getSize().getWidth()/6);

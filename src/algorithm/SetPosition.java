@@ -9,11 +9,9 @@ import java.util.Queue;
 
 public class SetPosition {
     ArrayList<treeIO> root_list;
-    treeIO a=root_list.get(0);
 
     public SetPosition(){
         root_list=layout.MainLayout.getTree();
-        start_SetPosition();
     }
 
     public void start_SetPosition() {
@@ -38,7 +36,7 @@ public class SetPosition {
         now_node.setX(1280/2);
         now_node.setY(640/2);
 
-        while (true){
+        while (!q.isEmpty()){
             now_node=(IO.treeIO)q.peek();
             int sibling_cnt=now_node.getChildCount();
 

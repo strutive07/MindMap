@@ -17,6 +17,8 @@ import util.AutoLabel;
 import util.ColorTable;
 import IO.treeIO;
 import layout.MainLayout;
+import algorithm.SetPosition;
+import algorithm.DisplayLabel;
 
 public class TextEditorPane extends JPanel{
 	/**
@@ -143,6 +145,11 @@ public class TextEditorPane extends JPanel{
 					}
 					System.out.println("cnt : " + tab_cnt + " ho : " + treeText[i]);
 				}
+                SetPosition setPosition = new SetPosition();
+				setPosition.start_SetPosition();
+				DisplayLabel displayLabel = new DisplayLabel();
+				displayLabel.display();
+
 //				dfs(root_list.get(0));
 //				IO.fileIO.export_Tree(root_list);
 //				dfs(root_list.get(0));
