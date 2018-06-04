@@ -39,43 +39,44 @@ public class SetPosition {
         now_node.setX(panelWeight/2);
         now_node.setY(panelHeight/2);
         now_node.setW(50);
-        now_node.setH(50);
-
+        now_node.setH(31);
+        now_node.set_angle(0);
         while (!q.isEmpty()){
             now_node=(IO.treeIO)q.peek();
             int sibling_cnt=now_node.getChildCount();
 
             double X,Y;
-            int length=100;//여기 뭐 들어가야할지 그려보면서 실험
             int cnt=0;
             X=now_node.getX();
             Y=now_node.getY();
 
             int sibling_num=number_of_sibiling(now_node);
             int num=now_node.get_child_number_in_parent();
-            double lim_angle=((double)1/(double)sibling_num)*Math.PI*2;
-            if (lim_angle>Math.PI*2/3.0)
-                lim_angle=Math.PI*2/3.0;
+            double lim_angle=((double)1/(double)sibling_num+0.2)*Math.PI*2;
+            if (lim_angle>Math.PI*2.0/3.6)
+                lim_angle=Math.PI*2.0/3.6;
+
+            int length=100+(int)(sibling_cnt*25/lim_angle);
 
             for (int i=0;i<sibling_cnt;i++){
                 double angle;
-
                 if (now_node.get_child_number_in_parent()==-1)
                     angle=((double)i/(double)sibling_cnt)*Math.PI*2;
                 else {
-                    if (sibling_cnt == 1)
-                        angle = ((double) num / (double) sibling_num) * Math.PI * 2;
+                    if (sibling_cnt == 1) {
+                        angle = now_node.get_angle();
+                    }
                     else {
-                        angle = ( - lim_angle / 2.0) + (lim_angle / (double)(sibling_cnt - 1)) * i;
-                        System.out.println(lim_angle);
+                        angle = ( now_node.get_angle()-(lim_angle/2.0))+ (lim_angle / (double)(sibling_cnt - 1)) * i;
                     }
                 }
 
+                now_node.getChildAt(i).set_angle(angle);
                 q.offer(now_node.getChildAt(i));
                 now_node.getChildAt(i).setX(X+Math.cos(angle)*length);
                 now_node.getChildAt(i).setY(Y+Math.sin(angle)*length);
                 now_node.getChildAt(i).setW(50);
-                now_node.getChildAt(i).setH(50);//여기 있는 것들은 차후 width,height값에 따라 변경
+                now_node.getChildAt(i).setH(31);//여기 있는 것들은 차후 width,height값에 따라 변경
             }
 
             q.poll();

@@ -11,6 +11,7 @@ public class treeIO{
     private double x, y;
     private int Tree_depth;
     private int LabelColor;
+    private double angle;
 
     public double getW() {
         return w;
@@ -127,5 +128,13 @@ public class treeIO{
 
     public void setTree_depth(int n){
         Tree_depth=n;
+    }
+
+    public void set_angle(double x){
+        angle=x;
+    }
+
+    public double get_angle(){
+        return angle;
     }
 }
