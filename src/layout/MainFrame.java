@@ -86,15 +86,15 @@ public class MainFrame extends JFrame{
 		
 		
         JPanel centerPanel = MainLayout.getCenterPanel();
+        centerPanel.setSize( 2 * (int)this.getSize().getWidth()/3, (int)this.getSize().getHeight());
+        centerPanel.setPreferredSize(new Dimension( 2 * (int)this.getSize().getWidth()/3, (int)this.getSize().getHeight()));
         centerPanel.setLayout(null);
         centerPanel.setBackground(ColorTable.PaneBackground_blue2);
 
-        JScrollPane centerScrollPanel = MainLayout.getCenterScrollPanel();
-
-        centerScrollPanel = new JScrollPane(centerPanel);
-        centerScrollPanel.setViewportView(centerPanel);
-
-
+        JScrollPane centerScrollPanel= new JScrollPane();
+//        centerScrollPanel.setViewportView(centerPanel);
+//		centerScrollPanel.setBounds((int)this.getSize().getWidth()/6, 0,  2 * (int)this.getSize().getWidth()/3, (int)this.getSize().getHeight());
+		centerScrollPanel.getViewport().add(centerPanel);
         rightPanel = new AttributePane((int)this.getSize().getWidth()/6);
         JScrollPane rightScrollPanel = new JScrollPane(rightPanel);
         
@@ -103,7 +103,7 @@ public class MainFrame extends JFrame{
         sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         sp.setLeftComponent(leftScrollPanel);
-        sp.setRightComponent(centerPanel);
+        sp.setRightComponent(centerScrollPanel);
 
 
         sp2.setLeftComponent(sp);

@@ -85,9 +85,8 @@ public class TextEditorPane extends JPanel{
 				Pair<Integer, treeIO> first_root = new Pair<Integer, treeIO>(0, root);
 
 				st.push(first_root);
-
+				root_list.clear();
 				root_list.add(root);
-
 
 
 

@@ -15,10 +15,12 @@ public class DisplayLabel {
     JPanel centerPanel;
     JScrollPane jScrollPane;
     public void display(){
+
         ArrayList<treeIO> root_list = layout.MainLayout.getTree();
+        //TODO 루트 2개 이상인거 구현하기
         treeIO root = root_list.get(0);
         centerPanel = layout.MainLayout.getCenterPanel();
-
+        centerPanel.removeAll();
 
         sub_displayNode(root);
         centerPanel.revalidate();
@@ -27,13 +29,14 @@ public class DisplayLabel {
 
 
     private void sub_displayNode(treeIO node){
-        JLabel label = new JLabel(node.getStringName());
+        JLabel label = new JLabel(node.getStringName(), SwingConstants.CENTER);
         label.setBounds((int)node.getX(), (int)node.getY(), (int)node.getW(), (int)node.getH());
 //        label.setSize((int)node.getW(), (int)node.getH());
 //        label.setLocation((int)node.getX(), (int)node.getY());
         label.setBorder(new TitledBorder(new LineBorder(Color.black, 3)));
         label.setOpaque(true);
-
+        Color label_color = Color.decode(Integer.toString(node.getLabelColor()));
+        label.setBackground(label_color);
         centerPanel.add(label);
         System.out.println(label);
         centerPanel.revalidate();

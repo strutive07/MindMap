@@ -60,6 +60,7 @@ public class treeIO{
 
     public treeIO(String name){
         this.name = name;
+        this.LabelColor = 0xFFF7E4;
     }
 
     public String getStringName(){
