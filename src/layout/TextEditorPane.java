@@ -163,7 +163,6 @@ public class TextEditorPane extends JPanel{
 		DisplayLabel displayLabel = new DisplayLabel();
 		displayLabel.display();
 
-		MainLayout.getCenterPanel().ho();
 	}
 
 }
