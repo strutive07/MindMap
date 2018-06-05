@@ -2,6 +2,7 @@ package listeners;
 
 import IO.treeIO;
 import layout.AttributePane;
+import layout.CenterPanel;
 import layout.MainFrame;
 import layout.MainLayout;
 import util.FindNodeByTarget;
@@ -52,6 +53,43 @@ public class LabelClicked extends MouseAdapter{
             attributePane.setSelectedLabelNumber(label_number);
             attributePane.setSelectedNodeNumber(nodeNumber);
         }
+        JLabel[] extensionPoint = new JLabel[8];
+        for(int i=0; i<8; i++){
+            extensionPoint[i] = new JLabel();
+            extensionPoint[i].setSize(10,10);
+            extensionPoint[i].setBackground(Color.black);
+            extensionPoint[i].setOpaque(true);
+            extensionPoint[i].setVisible(true);
+        }
+        extensionPoint[0].setLocation(jLabel.getLocation().x, jLabel.getLocation().y);
+        extensionPoint[1].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth()/2, jLabel.getLocation().y);
+        extensionPoint[2].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth(), jLabel.getLocation().y);
 
+        extensionPoint[3].setLocation(jLabel.getLocation().x, jLabel.getLocation().y  + (int)jLabel.getSize().getHeight()/2);
+        extensionPoint[4].setLocation(jLabel.getLocation().x  + (int)jLabel.getSize().getWidth(), jLabel.getLocation().y  + (int)jLabel.getSize().getHeight()/2);
+
+
+        extensionPoint[5].setLocation(jLabel.getLocation().x, jLabel.getLocation().y  + (int)jLabel.getSize().getHeight());
+        extensionPoint[6].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth()/2, jLabel.getLocation().y  + (int)jLabel.getSize().getHeight());
+        extensionPoint[7].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth(), jLabel.getLocation().y  + (int)jLabel.getSize().getHeight());
+
+        CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+
+        for(int i=0; i<8; i++){
+            centerPanel.add(extensionPoint[i]);
+
+        }
+
+        centerPanel.revalidate();
+        centerPanel.repaint();
+
+
+    }
+}
+
+class dragLabel extends MouseAdapter{
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        super.mouseDragged(e);
     }
 }
