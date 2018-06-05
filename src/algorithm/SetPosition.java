@@ -1,5 +1,6 @@
 package algorithm;
 import IO.treeIO;
+import layout.CenterPanel;
 import layout.MainLayout;
 import sun.nio.cs.ext.MacThai;
 
@@ -96,7 +97,7 @@ public class SetPosition {
             if (now_node.getTree_depth()>MAX)
                 MAX=now_node.getTree_depth();
 
-            for (int i=0;i<node.getChildCount();i++){
+            for (int i=0;i<now_node.getChildCount();i++){
                 q.offer(now_node.getChildAt(i));
                 now_node.getChildAt(i).setTree_depth(now_node.getTree_depth()+1);
             }
@@ -115,6 +116,8 @@ public class SetPosition {
 
     public void set_line(){
 
+        CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+        centerPanel.clear_list();
         Queue q = new LinkedList();
         double grd,grd1,grd2;
 
@@ -130,6 +133,8 @@ public class SetPosition {
                 double W,H;
                 double child_X,child_Y;
                 double child_W,child_H;
+                double sx,sy,ex,ey;
+
                 X=now_node.getX();
                 Y=now_node.getY();
                 W=now_node.getW();
@@ -147,29 +152,58 @@ public class SetPosition {
                         if ((grd>=H/W || grd<=-H/W) && Y>child_Y){
                             now_node.set_exit(X+(W/2.0),Y);
                             now_node.getChildAt(i).set_enter(child_X+(child_W/2.0),child_Y+child_H);
+                            sx=X+(W/2.0);
+                            sy=Y;
+                            ex=child_X+(child_W/2.0);
+                            ey=child_Y+child_H;
                         }
                         else if (grd>-H/W && grd<H/W){
                             now_node.set_exit(X+W,Y+H/2.0);
                             now_node.getChildAt(i).set_enter(child_X, child_Y+child_H/2.0);
+                            sx=X+W;
+                            sy=Y+H/2.0;
+                            ex=child_X;
+                            ey=child_Y+child_H/2.0;
                         }
                         else if ((grd>=H/W || grd<=-H/W) && Y<child_Y){
                             now_node.set_exit(X+(W/2.0),Y+H);
                             now_node.getChildAt(i).set_enter(child_X+(child_W/2.0),child_Y);
+                            sx=X+(W/2.0);
+                            sy=Y+H;
+                            ex=child_X+(child_W/2.0);
+                            ey=child_Y;
                         }
                         else {
                             now_node.set_exit(X, Y + H / 2.0);
                             now_node.getChildAt(i).set_enter(child_X + child_W, child_Y + child_H / 2.0);
+                            sx=X;
+                            sy=Y+H/2.0;
+                            ex=child_X+child_W;
+                            ey=child_Y+child_H/2.0;
                         }
 
                     }
                     else if (child_Y>Y){
                         now_node.set_exit(X+(W/2.0),Y+H);
                         now_node.getChildAt(i).set_enter(child_X+(child_W/2.0),child_Y);
+                        sx=X+(W/2.0);
+                        sy=Y+H;
+                        ex=child_X+(child_W/2.0);
+                        ey=child_Y;
                     }
                     else{
                         now_node.set_exit(X+(W/2.0),Y);
                         now_node.getChildAt(i).set_enter(child_X+(child_W/2.0),child_Y+child_H);
+                        sx=X+(W/2.0);
+                        sy=Y;
+                        ex=child_X+(child_W/2.0);
+                        ey=child_Y+H;
                     }
+
+                    centerPanel.start_x.add(sx);
+                    centerPanel.start_y.add(sy);
+                    centerPanel.end_x.add(ex);
+                    centerPanel.end_y.add(ey);
                 }
                 q.poll();
 
