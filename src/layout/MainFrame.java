@@ -92,7 +92,7 @@ public class MainFrame extends JFrame{
 		
         CenterPanel centerPanel = MainLayout.getCenterPanel();
 
-        centerPanel.setSize( 2 * (int)this.getSize().getWidth()/3, (int)this.getSize().getHeight());
+        centerPanel.setSize( 2 * (int)this.getSize().getWidth() * 2, (int)this.getSize().getHeight() * 2);
         centerPanel.setPreferredSize(new Dimension( 2 * (int)this.getSize().getWidth()/3, (int)this.getSize().getHeight()));
         centerPanel.setLayout(null);
         centerPanel.setBackground(ColorTable.PaneBackground_blue2);
@@ -135,6 +135,8 @@ public class MainFrame extends JFrame{
 		sp2.setDividerLocation((int)this.getSize().getWidth() - (int)this.getSize().getWidth()/6);
 		leftPanel.setTopLabelFontSize((int)this.getSize().getWidth()/6);
 		rightPanel.setTopLabelFontSize((int)this.getSize().getWidth()/6);
+		CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+		centerPanel.setFinish();
 	}
 
 

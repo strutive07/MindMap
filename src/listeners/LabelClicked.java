@@ -54,26 +54,28 @@ public class LabelClicked extends MouseAdapter{
             attributePane.setSelectedNodeNumber(nodeNumber);
         }
         JLabel[] extensionPoint = new JLabel[8];
+        CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+        centerPanel.setExtensionPoint(extensionPoint);
+
         for(int i=0; i<8; i++){
             extensionPoint[i] = new JLabel();
-            extensionPoint[i].setSize(10,10);
+            extensionPoint[i].setSize(5,5);
             extensionPoint[i].setBackground(Color.black);
             extensionPoint[i].setOpaque(true);
             extensionPoint[i].setVisible(true);
+            extensionPoint[i].addMouseListener(new dragLabel());
         }
-        extensionPoint[0].setLocation(jLabel.getLocation().x, jLabel.getLocation().y);
-        extensionPoint[1].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth()/2, jLabel.getLocation().y);
-        extensionPoint[2].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth(), jLabel.getLocation().y);
 
-        extensionPoint[3].setLocation(jLabel.getLocation().x, jLabel.getLocation().y  + (int)jLabel.getSize().getHeight()/2);
+        extensionPoint[0].setLocation(jLabel.getLocation().x - 5, jLabel.getLocation().y - 5);
+        extensionPoint[1].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth()/2 - 2, jLabel.getLocation().y - 5);
+        extensionPoint[2].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth(), jLabel.getLocation().y - 5);
+        extensionPoint[3].setLocation(jLabel.getLocation().x - 5, jLabel.getLocation().y  + (int)jLabel.getSize().getHeight()/2);
         extensionPoint[4].setLocation(jLabel.getLocation().x  + (int)jLabel.getSize().getWidth(), jLabel.getLocation().y  + (int)jLabel.getSize().getHeight()/2);
-
-
-        extensionPoint[5].setLocation(jLabel.getLocation().x, jLabel.getLocation().y  + (int)jLabel.getSize().getHeight());
-        extensionPoint[6].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth()/2, jLabel.getLocation().y  + (int)jLabel.getSize().getHeight());
+        extensionPoint[5].setLocation(jLabel.getLocation().x - 5 , jLabel.getLocation().y  + (int)jLabel.getSize().getHeight());
+        extensionPoint[6].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth()/2  - 2, jLabel.getLocation().y  + (int)jLabel.getSize().getHeight());
         extensionPoint[7].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth(), jLabel.getLocation().y  + (int)jLabel.getSize().getHeight());
 
-        CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+
 
         for(int i=0; i<8; i++){
             centerPanel.add(extensionPoint[i]);
@@ -84,12 +86,42 @@ public class LabelClicked extends MouseAdapter{
         centerPanel.repaint();
 
 
+        centerPanel.setFinish();
     }
 }
 
 class dragLabel extends MouseAdapter{
+    int x, y;
+    int cx, cy;
+    JLabel label = null;
     @Override
     public void mouseDragged(MouseEvent e) {
         super.mouseDragged(e);
+        System.out.println("ho11111");
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        super.mousePressed(e);
+        label = (JLabel)e.getSource();
+        x = label.getLocation().x;
+        y = label.getLocation().y;
+        System.out.println(x + " : " + y);
+        cx = MouseInfo.getPointerInfo().getLocation().x;
+        cy = MouseInfo.getPointerInfo().getLocation().y;
+        System.out.println(cx + " : " + cy);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        super.mouseReleased(e);
+        if(label != null){
+            System.out.println("ho");
+            int ccx = x + (MouseInfo.getPointerInfo().getLocation().x - cx);
+            int ccy = y + (MouseInfo.getPointerInfo().getLocation().y - cy);
+            System.out.println(ccx + " : " + ccy);
+            label.setLocation(ccx, ccy);
+            label = null;
+        }
     }
 }

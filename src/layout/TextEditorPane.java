@@ -159,6 +159,7 @@ public class TextEditorPane extends JPanel{
 		JPanel centerPanel = MainLayout.getCenterPanel();
 		SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
 		setPosition.start_SetPosition();
+		setPosition.set_line();
 
 		DisplayLabel displayLabel = new DisplayLabel();
 		displayLabel.display();

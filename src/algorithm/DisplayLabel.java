@@ -4,6 +4,8 @@ import IO.treeIO;
 
 import java.awt.*;
 import java.util.ArrayList;
+
+import layout.CenterPanel;
 import layout.MainFrame;
 import layout.MainLayout;
 import listeners.LabelClicked;
@@ -28,6 +30,8 @@ public class DisplayLabel {
         centerPanel.revalidate();
         centerPanel.repaint();
         layout.MainLayout.setLabels(labels);
+        CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+        centerPanel.setFinish();
     }
 
 
@@ -36,7 +40,7 @@ public class DisplayLabel {
         label.setBounds((int)node.getX(), (int)node.getY(), (int)node.getW(), (int)node.getH());
 //        label.setSize((int)node.getW(), (int)node.getH());
 //        label.setLocation((int)node.getX(), (int)node.getY());
-        label.setBorder(new TitledBorder(new LineBorder(Color.black, 3)));
+        label.setBorder(new TitledBorder(new LineBorder(Color.black, 1)));
         label.setOpaque(true);
         Color label_color = Color.decode(Integer.toString(node.getLabelColor()));
         label.setBackground(label_color);

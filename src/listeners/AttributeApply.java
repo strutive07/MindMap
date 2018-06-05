@@ -1,7 +1,9 @@
 package listeners;
 
 import IO.treeIO;
+import algorithm.SetPosition;
 import layout.AttributePane;
+import layout.CenterPanel;
 import util.FindNodeByTarget;
 
 import javax.swing.*;
@@ -41,5 +43,9 @@ public class AttributeApply extends MouseAdapter{
 
         Color color = Color.decode('#' + attributePane.getText_color().getText());
         jLabel.setBackground(color);
+        CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+        SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
+        setPosition.set_line();
+        centerPanel.setFinish();
     }
 }
