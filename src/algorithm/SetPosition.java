@@ -77,6 +77,7 @@ public class SetPosition {
                 now_node.getChildAt(i).setY(Y+Math.sin(angle)*length);
                 now_node.getChildAt(i).setW(50);
                 now_node.getChildAt(i).setH(31);//여기 있는 것들은 차후 width,height값에 따라 변경
+
             }
 
             q.poll();
@@ -110,5 +111,17 @@ public class SetPosition {
             return -1;
         else
             return node.getParent().getChildCount();
+    }
+
+    public void set_line(){
+
+        Queue q = new LinkedList()
+        for (int i=0;i<root_list.size();i++){
+            treeIO now_node=root_list.get(i);
+            q.offer(now_node);
+            while(!q.isEmpty()){
+
+            }
+        }
     }
 }
