@@ -77,6 +77,7 @@ public class SetPosition {
                 now_node.getChildAt(i).setY(Y+Math.sin(angle)*length);
                 now_node.getChildAt(i).setW(50);
                 now_node.getChildAt(i).setH(31);//여기 있는 것들은 차후 width,height값에 따라 변경
+
             }
 
             q.poll();
@@ -85,20 +86,20 @@ public class SetPosition {
 
     public int getTreeHeight(treeIO node){
         Queue q=new LinkedList();
-
+        treeIO now_node;
         node.setTree_depth(1);
         q.offer(node);
         int MAX=-1234567890;
 
         while(q.peek()!=null){
-            if (node.getTree_depth()>MAX)
-                MAX=node.getTree_depth();
+            now_node=(treeIO)q.peek();
+            if (now_node.getTree_depth()>MAX)
+                MAX=now_node.getTree_depth();
 
             for (int i=0;i<node.getChildCount();i++){
-                q.offer(node.getChildAt(i));
-                node.getChildAt(i).setTree_depth(node.getTree_depth()+1);
+                q.offer(now_node.getChildAt(i));
+                now_node.getChildAt(i).setTree_depth(now_node.getTree_depth()+1);
             }
-            node=(IO.treeIO)q.peek();
             q.poll();
         }
 
@@ -111,4 +112,69 @@ public class SetPosition {
         else
             return node.getParent().getChildCount();
     }
+
+    public void set_line(){
+
+        Queue q = new LinkedList();
+        double grd,grd1,grd2;
+
+        boolean flag1=false,flag2=false;
+
+        for (int t=0;t<root_list.size();t++){
+            treeIO now_node=root_list.get(t);
+            q.offer(now_node);
+            while(!q.isEmpty()){
+                now_node=(treeIO)q.peek();
+                int child_cnt=now_node.getChildCount();
+                double X,Y;
+                double W,H;
+                double child_X,child_Y;
+                double child_W,child_H;
+                X=now_node.getX();
+                Y=now_node.getY();
+                W=now_node.getW();
+                H=now_node.getH();
+                now_node.clear_exit();
+
+                for (int i=0;i<child_cnt;i++){
+                    q.offer(now_node.getChildAt(i));
+                    child_X=now_node.getChildAt(i).getX();
+                    child_Y=now_node.getChildAt(i).getY();
+                    child_W=now_node.getChildAt(i).getW();
+                    child_H=now_node.getChildAt(i).getH();
+                    if (child_X-X!=0){
+                        grd=((child_Y+child_H/2.0)-(Y+H/2.0))/((child_X+child_W/2.0)-(X+W/2.0));
+                        if ((grd>=H/W || grd<=-H/W) && Y>child_Y){
+                            now_node.set_exit(X+(W/2.0),Y);
+                            now_node.getChildAt(i).set_enter(child_X+(child_W/2.0),child_Y+child_H);
+                        }
+                        else if (grd>-H/W && grd<H/W){
+                            now_node.set_exit(X+W,Y+H/2.0);
+                            now_node.getChildAt(i).set_enter(child_X, child_Y+child_H/2.0);
+                        }
+                        else if ((grd>=H/W || grd<=-H/W) && Y<child_Y){
+                            now_node.set_exit(X+(W/2.0),Y+H);
+                            now_node.getChildAt(i).set_enter(child_X+(child_W/2.0),child_Y);
+                        }
+                        else {
+                            now_node.set_exit(X, Y + H / 2.0);
+                            now_node.getChildAt(i).set_enter(child_X + child_W, child_Y + child_H / 2.0);
+                        }
+
+                    }
+                    else if (child_Y>Y){
+                        now_node.set_exit(X+(W/2.0),Y+H);
+                        now_node.getChildAt(i).set_enter(child_X+(child_W/2.0),child_Y);
+                    }
+                    else{
+                        now_node.set_exit(X+(W/2.0),Y);
+                        now_node.getChildAt(i).set_enter(child_X+(child_W/2.0),child_Y+child_H);
+                    }
+                }
+                q.poll();
+
+            }
+        }
+    }
+
 }

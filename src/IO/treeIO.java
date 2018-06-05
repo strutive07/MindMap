@@ -4,6 +4,7 @@ import javax.swing.tree.TreeNode;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.LinkedList;
 
 public class treeIO{
     private String name;
@@ -13,6 +14,10 @@ public class treeIO{
     private int LabelColor;
     private double angle;
     private int nodeNumber;
+    private double enter_x,enter_y;
+    private ArrayList<Double> exit_x;
+    private ArrayList<Double> exit_y;
+
     public double getW() {
         return w;
     }
@@ -63,6 +68,8 @@ public class treeIO{
         this.name = name;
         this.LabelColor = 0xFFF7E4;
         this.nodeNumber = nodeNumber;
+        this.exit_x=new ArrayList<Double>();
+        this.exit_y=new ArrayList<Double>();
     }
 
     public int getNodeNumber() {
@@ -142,5 +149,20 @@ public class treeIO{
 
     public double get_angle(){
         return angle;
+    }
+
+    public void set_enter(double x,double y){
+        enter_x=x;
+        enter_y=y;
+    }
+
+    public void set_exit(double x,double y){
+        exit_x.add(x);
+        exit_y.add(y);
+    }
+
+    public void clear_exit(){
+        exit_x.clear();
+        exit_y.clear();
     }
 }
