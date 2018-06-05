@@ -79,6 +79,9 @@ public class TextEditorPane extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
 				makeTree();
+				layout.MainLayout.getCenterPanel().setExtensionPoint(null);
+				layout.MainLayout.getCenterPanel().setSelected_Label(null);
+				layout.MainLayout.getCenterPanel().setSelected_Node(null);
 			}
 		});
 	}

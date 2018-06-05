@@ -1,5 +1,7 @@
 package layout;
 
+import IO.treeIO;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -8,6 +10,8 @@ public class CenterPanel extends JPanel{
     Graphics g;
     int a;
     boolean isFinish = false;
+    JLabel selected_Label;
+    treeIO selected_Node;
     public ArrayList<Double> start_x;
     public ArrayList<Double> start_y;
     public ArrayList<Double> end_x;
@@ -23,12 +27,32 @@ public class CenterPanel extends JPanel{
 
     JLabel[] extensionPoint;
 
+    public JLabel getSelected_Label() {
+        return selected_Label;
+    }
+
+    public void setSelected_Label(JLabel selected_Label) {
+        this.selected_Label = selected_Label;
+    }
+
+    public treeIO getSelected_Node() {
+        return selected_Node;
+    }
+
+    public void setSelected_Node(treeIO selected_Node) {
+        this.selected_Node = selected_Node;
+    }
+
     public CenterPanel(){
         start_x=new ArrayList<Double>();
         start_y=new ArrayList<Double>();
         end_x=new ArrayList<Double>();
         end_y=new ArrayList<Double>();
         isFinish = false;
+        extensionPoint = null;
+        selected_Label = null;
+        selected_Node = null;
+
     }
 
     public void clear_list(){

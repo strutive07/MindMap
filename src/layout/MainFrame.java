@@ -7,15 +7,9 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 import java.awt.*;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JToolBar;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.*;
 
 import IO.SaveEvent;
 import sun.plugin.javascript.JSContext;
@@ -96,6 +90,27 @@ public class MainFrame extends JFrame{
         centerPanel.setPreferredSize(new Dimension( 2 * (int)this.getSize().getWidth()/3, (int)this.getSize().getHeight()));
         centerPanel.setLayout(null);
         centerPanel.setBackground(ColorTable.PaneBackground_blue2);
+        centerPanel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				super.mousePressed(e);
+				if(centerPanel.getExtensionPoint() != null){
+
+					JLabel[] pp = centerPanel.getExtensionPoint();
+					for(int i=0; i<pp.length; i++){
+						if(i == 0 || i == 1 || i == 3){
+							continue;
+						}
+
+						centerPanel.remove(pp[i]);
+					}
+
+					centerPanel.revalidate();
+					centerPanel.repaint();
+					centerPanel.setFinish();
+				}
+			}
+		});
 
         JScrollPane centerScrollPanel= new JScrollPane();
 //        centerScrollPanel.setViewportView(centerPanel);

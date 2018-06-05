@@ -1,6 +1,7 @@
 package listeners;
 
 import IO.treeIO;
+import algorithm.SetPosition;
 import layout.AttributePane;
 import layout.CenterPanel;
 import layout.MainFrame;
@@ -16,8 +17,8 @@ import java.awt.*;
 public class LabelClicked extends MouseAdapter{
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-        super.mouseClicked(e);
+    public void mousePressed(MouseEvent e) {
+        super.mousePressed(e);
         JLabel jLabel = (JLabel) e.getSource();
         int nodeNumber = Integer.parseInt(jLabel.getName());
         System.out.println("nodeNumber : " + nodeNumber);
@@ -55,21 +56,34 @@ public class LabelClicked extends MouseAdapter{
         }
         JLabel[] extensionPoint = new JLabel[8];
         CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
-        centerPanel.setExtensionPoint(extensionPoint);
+        centerPanel.setSelected_Node(target);
+        if(centerPanel.getExtensionPoint() != null){
+            JLabel[] pp = centerPanel.getExtensionPoint();
+            for(int i=0; i<pp.length; i++){
+                if(i == 0 || i == 1 || i == 3){
+                    continue;
+                }
+                centerPanel.remove(pp[i]);
+            }
+        }
 
+        centerPanel.setExtensionPoint(extensionPoint);
         for(int i=0; i<8; i++){
+            if(i == 0 || i == 1 || i == 3){
+                continue;
+            }
             extensionPoint[i] = new JLabel();
-            extensionPoint[i].setSize(5,5);
+            extensionPoint[i].setSize(10,10);
             extensionPoint[i].setBackground(Color.black);
             extensionPoint[i].setOpaque(true);
             extensionPoint[i].setVisible(true);
             extensionPoint[i].addMouseListener(new dragLabel());
         }
 
-        extensionPoint[0].setLocation(jLabel.getLocation().x - 5, jLabel.getLocation().y - 5);
-        extensionPoint[1].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth()/2 - 2, jLabel.getLocation().y - 5);
+//        extensionPoint[0].setLocation(jLabel.getLocation().x - 5, jLabel.getLocation().y - 5);
+//        extensionPoint[1].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth()/2 - 2, jLabel.getLocation().y - 5);
         extensionPoint[2].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth(), jLabel.getLocation().y - 5);
-        extensionPoint[3].setLocation(jLabel.getLocation().x - 5, jLabel.getLocation().y  + (int)jLabel.getSize().getHeight()/2);
+//        extensionPoint[3].setLocation(jLabel.getLocation().x - 5, jLabel.getLocation().y  + (int)jLabel.getSize().getHeight()/2);
         extensionPoint[4].setLocation(jLabel.getLocation().x  + (int)jLabel.getSize().getWidth(), jLabel.getLocation().y  + (int)jLabel.getSize().getHeight()/2);
         extensionPoint[5].setLocation(jLabel.getLocation().x - 5 , jLabel.getLocation().y  + (int)jLabel.getSize().getHeight());
         extensionPoint[6].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth()/2  - 2, jLabel.getLocation().y  + (int)jLabel.getSize().getHeight());
@@ -78,15 +92,16 @@ public class LabelClicked extends MouseAdapter{
 
 
         for(int i=0; i<8; i++){
+            if(i == 0 || i == 1 || i == 3){
+                continue;
+            }
             centerPanel.add(extensionPoint[i]);
-
         }
 
         centerPanel.revalidate();
         centerPanel.repaint();
-
-
         centerPanel.setFinish();
+        centerPanel.setSelected_Label(jLabel);
     }
 }
 
@@ -98,6 +113,7 @@ class dragLabel extends MouseAdapter{
     public void mouseDragged(MouseEvent e) {
         super.mouseDragged(e);
         System.out.println("ho11111");
+
     }
 
     @Override
@@ -120,8 +136,34 @@ class dragLabel extends MouseAdapter{
             int ccx = x + (MouseInfo.getPointerInfo().getLocation().x - cx);
             int ccy = y + (MouseInfo.getPointerInfo().getLocation().y - cy);
             System.out.println(ccx + " : " + ccy);
+            CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+            JLabel jLabel = centerPanel.getSelected_Label();
+
+            int c_size_w = (int)jLabel.getSize().getWidth() + (MouseInfo.getPointerInfo().getLocation().x - cx);
+            int c_size_h = (int)jLabel.getSize().getHeight() + (MouseInfo.getPointerInfo().getLocation().y - cy);
             label.setLocation(ccx, ccy);
+            jLabel.setSize(c_size_w, c_size_h);
+
             label = null;
+            JLabel[] extensionPoint = centerPanel.getExtensionPoint();
+//            extensionPoint[0].setLocation(jLabel.getLocation().x - 5, jLabel.getLocation().y - 5);
+//            extensionPoint[1].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth()/2 - 2, jLabel.getLocation().y - 5);
+            extensionPoint[2].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth(), jLabel.getLocation().y - 5);
+//            extensionPoint[3].setLocation(jLabel.getLocation().x - 5, jLabel.getLocation().y  + (int)jLabel.getSize().getHeight()/2);
+            extensionPoint[4].setLocation(jLabel.getLocation().x  + (int)jLabel.getSize().getWidth(), jLabel.getLocation().y  + (int)jLabel.getSize().getHeight()/2);
+            extensionPoint[5].setLocation(jLabel.getLocation().x - 5 , jLabel.getLocation().y  + (int)jLabel.getSize().getHeight());
+            extensionPoint[6].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth()/2  - 2, jLabel.getLocation().y  + (int)jLabel.getSize().getHeight());
+            extensionPoint[7].setLocation(jLabel.getLocation().x + (int)jLabel.getSize().getWidth(), jLabel.getLocation().y  + (int)jLabel.getSize().getHeight());
+
+            treeIO node = centerPanel.getSelected_Node();
+            node.setX((double) jLabel.getLocation().x);
+            node.setY((double) jLabel.getLocation().y);
+            node.setW((double) c_size_w);
+            node.setH((double) c_size_h);
+
+            SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
+            setPosition.set_line();
+            centerPanel.setFinish();
         }
     }
 }
