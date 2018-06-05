@@ -33,7 +33,7 @@ public class AutoLabel {
         while(true){
             if(label.getPreferredSize().getWidth() > size){
                 Font font = new Font(label.getFont().getName(), label.getFont().getStyle(), font_size--);
-                label.setFont(font);A
+                label.setFont(font);
             }else{
                 break;
             }
