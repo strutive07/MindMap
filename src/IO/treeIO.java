@@ -12,7 +12,7 @@ public class treeIO{
     private int Tree_depth;
     private int LabelColor;
     private double angle;
-
+    private int nodeNumber;
     public double getW() {
         return w;
     }
@@ -59,9 +59,14 @@ public class treeIO{
 
     ArrayList<treeIO> children = new ArrayList<treeIO>();
 
-    public treeIO(String name){
+    public treeIO(String name, int nodeNumber){
         this.name = name;
         this.LabelColor = 0xFFF7E4;
+        this.nodeNumber = nodeNumber;
+    }
+
+    public int getNodeNumber() {
+        return nodeNumber;
     }
 
     public String getStringName(){

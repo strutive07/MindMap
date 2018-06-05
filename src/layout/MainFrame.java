@@ -25,12 +25,9 @@ public class MainFrame extends JFrame{
 	JSplitPane sp, sp2;
 	TextEditorPane leftPanel;
 	JPanel centerPanel;
-	AttributePane rightPanel;
+    AttributePane rightPanel;
 
-
-
-
-	public MainFrame(){
+    public MainFrame(){
 		setTitle("MindMap By 장원준, 문태진");
 
 		
@@ -95,7 +92,10 @@ public class MainFrame extends JFrame{
 //        centerScrollPanel.setViewportView(centerPanel);
 //		centerScrollPanel.setBounds((int)this.getSize().getWidth()/6, 0,  2 * (int)this.getSize().getWidth()/3, (int)this.getSize().getHeight());
 		centerScrollPanel.getViewport().add(centerPanel);
+
         rightPanel = new AttributePane((int)this.getSize().getWidth()/6);
+        layout.MainLayout.setRightPanel(rightPanel);
+
         JScrollPane rightScrollPanel = new JScrollPane(rightPanel);
         
         

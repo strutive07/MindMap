@@ -15,6 +15,7 @@ package IO;
         import java.util.List;
 
 public class fileIO {
+    private static int nodeNumber = 0;
     public static void OutputJson(String jsonObject){
         try{
             String pretty_string = toPrettyFormat(jsonObject);
@@ -44,8 +45,8 @@ public class fileIO {
             JsonParser jsonParser = new JsonParser();
             JsonElement jsonElement = jsonParser.parse(jsonString);
             JsonObject root_object = jsonElement.getAsJsonObject();
-
-            treeIO root_node = new treeIO(root_object.get("name").getAsString());
+            //TODO root 여러개일 경우로 코드 바꾸기
+            treeIO root_node = new treeIO(root_object.get("name").getAsString(), nodeNumber++);
             root_node.setX(root_object.get("x").getAsDouble());
             root_node.setY(root_object.get("y").getAsDouble());
             root_node.setH(root_object.get("h").getAsDouble());
@@ -89,10 +90,9 @@ public class fileIO {
     }
 
     private static treeIO create_Tree(JsonElement element){
-
         JsonObject root_object = element.getAsJsonObject();
 
-        treeIO node = new treeIO(root_object.get("name").getAsString());
+        treeIO node = new treeIO(root_object.get("name").getAsString(), nodeNumber++);
         node.setX(root_object.get("x").getAsDouble());
         node.setY(root_object.get("y").getAsDouble());
         node.setH(root_object.get("h").getAsDouble());

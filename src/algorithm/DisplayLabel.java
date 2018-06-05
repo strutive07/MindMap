@@ -6,6 +6,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import layout.MainFrame;
 import layout.MainLayout;
+import listeners.LabelClicked;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -14,6 +15,7 @@ import javax.swing.border.TitledBorder;
 public class DisplayLabel {
     JPanel centerPanel;
     JScrollPane jScrollPane;
+
     public void display(){
 
         ArrayList<treeIO> root_list = layout.MainLayout.getTree();
@@ -21,14 +23,15 @@ public class DisplayLabel {
         treeIO root = root_list.get(0);
         centerPanel = layout.MainLayout.getCenterPanel();
         centerPanel.removeAll();
-
-        sub_displayNode(root);
+        ArrayList<JLabel> labels = new ArrayList<JLabel>();
+        sub_displayNode(root, labels);
         centerPanel.revalidate();
         centerPanel.repaint();
+        layout.MainLayout.setLabels(labels);
     }
 
 
-    private void sub_displayNode(treeIO node){
+    private void sub_displayNode(treeIO node, ArrayList<JLabel> labels){
         JLabel label = new JLabel(node.getStringName(), SwingConstants.CENTER);
         label.setBounds((int)node.getX(), (int)node.getY(), (int)node.getW(), (int)node.getH());
 //        label.setSize((int)node.getW(), (int)node.getH());
@@ -37,6 +40,9 @@ public class DisplayLabel {
         label.setOpaque(true);
         Color label_color = Color.decode(Integer.toString(node.getLabelColor()));
         label.setBackground(label_color);
+        label.setName(Integer.toString(node.getNodeNumber()));
+        label.addMouseListener(new LabelClicked());
+        labels.add(label);
         centerPanel.add(label);
         System.out.println(label);
         centerPanel.revalidate();
@@ -45,7 +51,7 @@ public class DisplayLabel {
 
 
         for(int i=0; i<node.getChildCount(); i++){
-            sub_displayNode(node.getChildAt(i));
+            sub_displayNode(node.getChildAt(i), labels);
         }
     }
 }

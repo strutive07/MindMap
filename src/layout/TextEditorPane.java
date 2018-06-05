@@ -78,10 +78,11 @@ public class TextEditorPane extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
+				int nodeNumber = 0;
 				String treeText[] = textArea.getText().split("[\n]");
 				Stack<Pair<Integer, treeIO>> st = new Stack<Pair<Integer, treeIO>>();
 
-				treeIO root = new treeIO(treeText[0]);
+				treeIO root = new treeIO(treeText[0], nodeNumber++);
 				Pair<Integer, treeIO> first_root = new Pair<Integer, treeIO>(0, root);
 
 				st.push(first_root);
@@ -100,13 +101,13 @@ public class TextEditorPane extends JPanel{
 					}
 					treeText[i] = treeText[i].substring(tab_cnt,treeText[i].length());
 					if(st.peek().left < tab_cnt){
-						treeIO node = new treeIO(treeText[i]);
+						treeIO node = new treeIO(treeText[i], nodeNumber++);
 						st.peek().right.push_child(node);
 						Pair<Integer, treeIO> next_node = new Pair<Integer, treeIO>(tab_cnt, node);
 						st.push(next_node);
 					}else if(st.peek().left == tab_cnt){
 						st.pop();
-						treeIO node = new treeIO(treeText[i]);
+						treeIO node = new treeIO(treeText[i], nodeNumber++);
 						if(st.empty()){
 							root_list.add(node);
 						}else{
@@ -120,7 +121,7 @@ public class TextEditorPane extends JPanel{
 						while(!st.empty()){
 							if(st.peek().left == 0){
 								st.pop();
-								treeIO another_root = new treeIO(treeText[i]);
+								treeIO another_root = new treeIO(treeText[i], nodeNumber++);
 								Pair<Integer, treeIO> next_node = new Pair<Integer, treeIO>(tab_cnt, another_root);
 								st.push(next_node);
 								root_list.add(another_root);
@@ -130,7 +131,7 @@ public class TextEditorPane extends JPanel{
 								st.pop();
 							}else if(st.peek().left == tab_cnt){
 								st.pop();
-								treeIO node = new treeIO(treeText[i]);
+								treeIO node = new treeIO(treeText[i], nodeNumber++);
 								if(st.empty()){
 									root_list.add(node);
 								}else{

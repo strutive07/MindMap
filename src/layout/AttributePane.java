@@ -1,5 +1,6 @@
 package layout;
 
+import listeners.AttributeApply;
 import util.AutoLabel;
 import util.ColorTable;
 
@@ -19,9 +20,52 @@ public class AttributePane extends JPanel{
 	TextField text_x, text_y, text_w, text_h, text_color, text_TEXT;
 	GridBagLayout gridBagLayout;
 	JPanel grid;
+	int selectedLabelNumber = -1;
+	int selectedNodeNumber = -1;
 
+	public int getSelectedNodeNumber() {
+		return selectedNodeNumber;
+	}
+
+	public void setSelectedNodeNumber(int selectedNodeNumber) {
+		this.selectedNodeNumber = selectedNodeNumber;
+	}
+
+	public int getSelectedLabelNumber() {
+		return selectedLabelNumber;
+	}
+
+	public void setSelectedLabelNumber(int selectedLabelNumber) {
+		this.selectedLabelNumber = selectedLabelNumber;
+	}
+
+	public TextField getText_x() {
+
+		return text_x;
+	}
+
+	public TextField getText_y() {
+		return text_y;
+	}
+
+	public TextField getText_w() {
+		return text_w;
+	}
+
+	public TextField getText_h() {
+		return text_h;
+	}
+
+	public TextField getText_color() {
+		return text_color;
+	}
+
+	public TextField getText_TEXT() {
+		return text_TEXT;
+	}
 
 	public AttributePane(int size) {
+
 		this.setLayout(new BorderLayout());
 
 		TopLabel = new JLabel("Attribute Pane");
@@ -80,6 +124,7 @@ public class AttributePane extends JPanel{
 		ApplyButton.setBackground(ColorTable.ApplyButton_Red);
 
 		ApplyButton.setOpaque(true);
+		ApplyButton.addMouseListener(new AttributeApply());
 
 
 		LineBorder bd = new LineBorder(ColorTable.LabelBorder, 1, true);
