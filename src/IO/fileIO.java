@@ -16,10 +16,11 @@ package IO;
 
 public class fileIO {
     private static int nodeNumber = 0;
-    public static void OutputJson(String jsonObject){
+
+    public static void OutputJson(String jsonObject, String path){
         try{
             String pretty_string = toPrettyFormat(jsonObject);
-            FileWriter writer = new FileWriter("OutPut.json");
+            FileWriter writer = new FileWriter(path);
             writer.write(pretty_string);
 
             writer.close();
@@ -27,11 +28,12 @@ public class fileIO {
             System.out.println("TAG:JSON_OUTPUT_ERROR:"+e);
         }
     }
-    public static void export_Tree(ArrayList<treeIO> root_list){
+
+    public static void export_Tree(ArrayList<treeIO> root_list, String path){
         Gson gson = new Gson();
         for(int i=0; i<root_list.size(); i++){
             JsonObject jsonObject = create_Json(root_list.get(i));
-            OutputJson(jsonObject.toString());
+            OutputJson(jsonObject.toString(), path);
         }
     }
 

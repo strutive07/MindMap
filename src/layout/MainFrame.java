@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+import java.awt.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -67,11 +68,17 @@ public class MainFrame extends JFrame{
 		this.setJMenuBar(menuBar);
 	}
 	private void createToolBar() {
+		SaveEvent saveEvent = new SaveEvent();
 		JToolBar toolBar = new JToolBar("ToolBar");
 		toolBar.setBackground(ColorTable.ToolBar_blue);
 		toolBar.setFloatable(false);
-		toolBar.add(new JButton("저장"));
-		toolBar.add(new JButton("불러오기"));
+		JButton saveButton = new JButton("저장");
+		saveButton.addActionListener(saveEvent);
+		JButton loadButton = new JButton("불러오기");
+		loadButton.addActionListener(saveEvent);
+
+		toolBar.add(saveButton);
+		toolBar.add(loadButton);
 		getContentPane().add(toolBar, BorderLayout.NORTH);
 	}
 	private void createSplitPane() {
@@ -79,10 +86,12 @@ public class MainFrame extends JFrame{
 		this.getContentPane().setLayout(new BorderLayout());
 		
 		leftPanel = new TextEditorPane((int)this.getSize().getWidth()/6);
+
 		JScrollPane leftScrollPanel = new JScrollPane(leftPanel);
 		
 		
-        JPanel centerPanel = MainLayout.getCenterPanel();
+        CenterPanel centerPanel = MainLayout.getCenterPanel();
+
         centerPanel.setSize( 2 * (int)this.getSize().getWidth()/3, (int)this.getSize().getHeight());
         centerPanel.setPreferredSize(new Dimension( 2 * (int)this.getSize().getWidth()/3, (int)this.getSize().getHeight()));
         centerPanel.setLayout(null);
@@ -117,6 +126,7 @@ public class MainFrame extends JFrame{
         sp2.setDividerLocation((int)this.getSize().getWidth() - (int)this.getSize().getWidth()/6);
         
         this.getContentPane().add(sp2, BorderLayout.CENTER);
+        layout.MainLayout.setLeftPanel(leftPanel);
         
 	}
 
@@ -126,4 +136,6 @@ public class MainFrame extends JFrame{
 		leftPanel.setTopLabelFontSize((int)this.getSize().getWidth()/6);
 		rightPanel.setTopLabelFontSize((int)this.getSize().getWidth()/6);
 	}
+
+
 }

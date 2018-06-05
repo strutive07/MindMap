@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.awt.*;
 
 public class LabelClicked extends MouseAdapter{
 
@@ -51,5 +52,6 @@ public class LabelClicked extends MouseAdapter{
             attributePane.setSelectedLabelNumber(label_number);
             attributePane.setSelectedNodeNumber(nodeNumber);
         }
+
     }
 }

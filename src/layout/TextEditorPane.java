@@ -78,80 +78,7 @@ public class TextEditorPane extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
-				int nodeNumber = 0;
-				String treeText[] = textArea.getText().split("[\n]");
-				Stack<Pair<Integer, treeIO>> st = new Stack<Pair<Integer, treeIO>>();
-
-				treeIO root = new treeIO(treeText[0], nodeNumber++);
-				Pair<Integer, treeIO> first_root = new Pair<Integer, treeIO>(0, root);
-
-				st.push(first_root);
-				root_list.clear();
-				root_list.add(root);
-
-
-
-				//트리 만들기. 이걸 루트로
-				for (int i=1; i<treeText.length; i++){
-					int tab_cnt = 0;
-					for (int j=0; j<treeText[i].length(); j++){
-						if(treeText[i].charAt(j) == '\t'){
-							tab_cnt++;
-						}
-					}
-					treeText[i] = treeText[i].substring(tab_cnt,treeText[i].length());
-					if(st.peek().left < tab_cnt){
-						treeIO node = new treeIO(treeText[i], nodeNumber++);
-						st.peek().right.push_child(node);
-						Pair<Integer, treeIO> next_node = new Pair<Integer, treeIO>(tab_cnt, node);
-						st.push(next_node);
-					}else if(st.peek().left == tab_cnt){
-						st.pop();
-						treeIO node = new treeIO(treeText[i], nodeNumber++);
-						if(st.empty()){
-							root_list.add(node);
-						}else{
-							st.peek().right.push_child(node);
-						}
-
-						Pair<Integer, treeIO> next_node = new Pair<Integer, treeIO>(tab_cnt, node);
-						st.push(next_node);
-
-					}else{
-						while(!st.empty()){
-							if(st.peek().left == 0){
-								st.pop();
-								treeIO another_root = new treeIO(treeText[i], nodeNumber++);
-								Pair<Integer, treeIO> next_node = new Pair<Integer, treeIO>(tab_cnt, another_root);
-								st.push(next_node);
-								root_list.add(another_root);
-								break;
-							}
-							if(st.peek().left > tab_cnt){
-								st.pop();
-							}else if(st.peek().left == tab_cnt){
-								st.pop();
-								treeIO node = new treeIO(treeText[i], nodeNumber++);
-								if(st.empty()){
-									root_list.add(node);
-								}else{
-									st.peek().right.push_child(node);
-								}
-								Pair<Integer, treeIO> next_node = new Pair<Integer, treeIO>(tab_cnt, node);
-								st.push(next_node);
-								break;
-							}
-						}
-					}
-					System.out.println("cnt : " + tab_cnt + " ho : " + treeText[i]);
-				}
-
-				JPanel centerPanel = MainLayout.getCenterPanel();
-                SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
-				setPosition.start_SetPosition();
-
-				DisplayLabel displayLabel = new DisplayLabel();
-				displayLabel.display();
+				makeTree();
 			}
 		});
 	}
@@ -160,7 +87,88 @@ public class TextEditorPane extends JPanel{
 		AutoLabel.setLabelFontSize(TopLabel, size);
 	}
 
+	public void makeTree(){
+		int nodeNumber = 0;
+		String treeText[] = textArea.getText().split("[\n]");
+		Stack<Pair<Integer, treeIO>> st = new Stack<Pair<Integer, treeIO>>();
+
+		treeIO root = new treeIO(treeText[0], nodeNumber++);
+		Pair<Integer, treeIO> first_root = new Pair<Integer, treeIO>(0, root);
+
+		st.push(first_root);
+		root_list.clear();
+		root_list.add(root);
+
+
+
+		//트리 만들기. 이걸 루트로
+		for (int i=1; i<treeText.length; i++){
+			int tab_cnt = 0;
+			for (int j=0; j<treeText[i].length(); j++){
+				if(treeText[i].charAt(j) == '\t'){
+					tab_cnt++;
+				}
+			}
+			treeText[i] = treeText[i].substring(tab_cnt,treeText[i].length());
+			if(st.peek().left < tab_cnt){
+				treeIO node = new treeIO(treeText[i], nodeNumber++);
+				st.peek().right.push_child(node);
+				Pair<Integer, treeIO> next_node = new Pair<Integer, treeIO>(tab_cnt, node);
+				st.push(next_node);
+			}else if(st.peek().left == tab_cnt){
+				st.pop();
+				treeIO node = new treeIO(treeText[i], nodeNumber++);
+				if(st.empty()){
+					root_list.add(node);
+				}else{
+					st.peek().right.push_child(node);
+				}
+
+				Pair<Integer, treeIO> next_node = new Pair<Integer, treeIO>(tab_cnt, node);
+				st.push(next_node);
+
+			}else{
+				while(!st.empty()){
+					if(st.peek().left == 0){
+						st.pop();
+						treeIO another_root = new treeIO(treeText[i], nodeNumber++);
+						Pair<Integer, treeIO> next_node = new Pair<Integer, treeIO>(tab_cnt, another_root);
+						st.push(next_node);
+						root_list.add(another_root);
+						break;
+					}
+					if(st.peek().left > tab_cnt){
+						st.pop();
+					}else if(st.peek().left == tab_cnt){
+						st.pop();
+						treeIO node = new treeIO(treeText[i], nodeNumber++);
+						if(st.empty()){
+							root_list.add(node);
+						}else{
+							st.peek().right.push_child(node);
+						}
+						Pair<Integer, treeIO> next_node = new Pair<Integer, treeIO>(tab_cnt, node);
+						st.push(next_node);
+						break;
+					}
+				}
+			}
+			System.out.println("cnt : " + tab_cnt + " ho : " + treeText[i]);
+		}
+
+		JPanel centerPanel = MainLayout.getCenterPanel();
+		SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
+		setPosition.start_SetPosition();
+
+		DisplayLabel displayLabel = new DisplayLabel();
+		displayLabel.display();
+
+		MainLayout.getCenterPanel().ho();
+	}
+
 }
+
+
 
 class Pair<L,R> {
 	final L left;
