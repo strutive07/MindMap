@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import algorithm.DisplayLabel;
+import algorithm.SetPosition;
+import layout.CenterPanel;
 import layout.MainLayout;
 
 import javax.swing.*;
@@ -53,6 +55,11 @@ public class SaveEvent implements ActionListener{
             displayLabel.display();
             String file_name = jFileChooser.getSelectedFile().getName();
             layout.MainLayout.getFrame().setTitle("Mind Map - FILE : " + file_name);
+
+            CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+            SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
+            setPosition.set_line();
+            centerPanel.setFinish();
         }
 
 

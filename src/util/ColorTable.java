@@ -10,6 +10,14 @@ public class ColorTable {
 	public static final Color ToolBar_blue = new Color(148, 169, 215);
 	public static final Color LabelBorder = new Color(54, 81, 137);
 	public static final Color ApplyButton_Red = new Color(176, 35, 24);
-	
+
+	public static Color ReverseColor(Color color){
+		if(color.getAlpha() == 125){
+			return new Color(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue(), 255);
+		}else{
+			return new Color(255 - color.getRed(), 255 - color.getGreen(), 255 - color.getBlue(), 125);
+		}
+
+	}
 }
 

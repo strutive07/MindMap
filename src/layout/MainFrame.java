@@ -98,9 +98,9 @@ public class MainFrame extends JFrame{
 
 					JLabel[] pp = centerPanel.getExtensionPoint();
 					for(int i=0; i<pp.length; i++){
-						if(i == 0 || i == 1 || i == 3){
-							continue;
-						}
+//						if(i == 0 || i == 1 || i == 3){
+//							continue;
+//						}
 
 						centerPanel.remove(pp[i]);
 					}
@@ -109,6 +109,11 @@ public class MainFrame extends JFrame{
 					centerPanel.repaint();
 					centerPanel.setFinish();
 				}
+				JLabel before_label = centerPanel.getSelected_Label();
+				if(before_label != null){
+					before_label.setBackground(ColorTable.ReverseColor(before_label.getBackground()));
+				}
+				centerPanel.setSelected_Label(null);
 			}
 		});
 

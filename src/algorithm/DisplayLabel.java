@@ -46,6 +46,7 @@ public class DisplayLabel {
         label.setBackground(label_color);
         label.setName(Integer.toString(node.getNodeNumber()));
         label.addMouseListener(new LabelClicked());
+        label.addMouseMotionListener(new LabelClicked());
         labels.add(label);
         centerPanel.add(label);
         System.out.println(label);
