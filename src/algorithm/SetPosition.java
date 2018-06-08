@@ -4,6 +4,7 @@ import layout.CenterPanel;
 import layout.MainLayout;
 import sun.nio.cs.ext.MacThai;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -78,7 +79,14 @@ public class SetPosition {
                 now_node.getChildAt(i).setY(Y+Math.sin(angle)*length);
                 now_node.getChildAt(i).setW(50);
                 now_node.getChildAt(i).setH(31);//여기 있는 것들은 차후 width,height값에 따라 변경
+                CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+                if(centerPanel.getPreferredSize().getHeight() < now_node.getChildAt(i).getY() || 0 > now_node.getChildAt(i).getY()){
+                    centerPanel.setPreferredSize(new Dimension((int)centerPanel.getPreferredSize().getWidth(), (int)centerPanel.getPreferredSize().getHeight() * 2 ));
+                }
 
+                if(centerPanel.getPreferredSize().getWidth() < now_node.getChildAt(i).getX() || 0 > now_node.getChildAt(i).getX()){
+                    centerPanel.setPreferredSize(new Dimension((int)centerPanel.getPreferredSize().getWidth() * 2, (int)centerPanel.getPreferredSize().getHeight()));
+                }
             }
 
             q.poll();

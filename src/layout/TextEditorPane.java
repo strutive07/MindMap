@@ -39,7 +39,13 @@ public class TextEditorPane extends JPanel{
 		}
 	}
 
+	public JTextArea getTextArea() {
+		return textArea;
+	}
 
+	public void setTextArea(JTextArea textArea) {
+		this.textArea = textArea;
+	}
 
 	private static final long serialVersionUID = 1L;
 	JLabel TopLabel;

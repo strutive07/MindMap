@@ -3,12 +3,9 @@ package layout;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.*;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.*;
 
 import IO.SaveEvent;
@@ -23,7 +20,7 @@ public class MainFrame extends JFrame{
     AttributePane rightPanel;
 
     public MainFrame(){
-		setTitle("MindMap By 장원준, 문태진");
+		setTitle("MindMap By 장원준, 문태진 - FILE : 문서 1(저장 안됨)");
 
 		
 		setSize(1280, 640);
@@ -44,17 +41,32 @@ public class MainFrame extends JFrame{
 		JMenuBar menuBar = new JMenuBar();
 		JMenu filemenu = new JMenu("파일");
 		JMenuItem saveItem = new JMenuItem("저장");
-
 		saveItem.addActionListener(saveEvent);
-
-		JMenuItem loadItem = new JMenuItem("불러오기");
-
+		JMenuItem loadItem = new JMenuItem("열기");
 		loadItem.addActionListener(saveEvent);
-
+		JMenuItem reSaveItem = new JMenuItem("다른 이름으로 저장");
+		reSaveItem.addActionListener(saveEvent);
+		JMenuItem resetItem = new JMenuItem("새로 만들기");
+		resetItem.addActionListener(saveEvent);
 		filemenu.add(saveItem);
 		filemenu.add(loadItem);
+		filemenu.add(reSaveItem);
+		filemenu.add(resetItem);
 		menuBar.add(filemenu);
-		
+
+		JMenu editMenu = new JMenu("편집");
+		JMenuItem ApplyItem = new JMenuItem("적용");
+		JMenuItem ChangeItem = new JMenuItem("변경");
+		editMenu.add(ApplyItem);
+		editMenu.add(ChangeItem);
+		menuBar.add(editMenu);
+
+		JMenu windowMenu = new JMenu("윈도우");
+		JMenuItem exitItem = new JMenuItem("닫기");
+		windowMenu.add(exitItem);
+		menuBar.add(windowMenu);
+
+
 		menuBar.setBackground(ColorTable.MenuBar_blue);
 		filemenu.setBackground(ColorTable.MenuBar_blue);
 		menuBar.setOpaque(true);
@@ -70,6 +82,7 @@ public class MainFrame extends JFrame{
 		saveButton.addActionListener(saveEvent);
 		JButton loadButton = new JButton("불러오기");
 		loadButton.addActionListener(saveEvent);
+		JButton reSaveButton = new JButton("다른 이름으로 저장");
 
 		toolBar.add(saveButton);
 		toolBar.add(loadButton);
@@ -126,8 +139,9 @@ public class MainFrame extends JFrame{
         layout.MainLayout.setRightPanel(rightPanel);
 
         JScrollPane rightScrollPanel = new JScrollPane(rightPanel);
-        
-        
+
+		centerScrollPanel.getHorizontalScrollBar().addAdjustmentListener(new ScrollEvent());
+		centerScrollPanel.getVerticalScrollBar().addAdjustmentListener(new ScrollEvent());
 
         sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -158,6 +172,13 @@ public class MainFrame extends JFrame{
 		CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
 		centerPanel.setFinish();
 	}
-
-
 }
+class ScrollEvent implements AdjustmentListener{
+
+	@Override
+	public void adjustmentValueChanged(AdjustmentEvent e) {
+		CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+		centerPanel.setFinish();
+	}
+}
+

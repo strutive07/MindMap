@@ -5,7 +5,9 @@ package IO;
         import com.google.gson.reflect.TypeToken;
         import com.google.gson.stream.JsonReader;
         import jdk.nashorn.internal.parser.JSONParser;
+        import layout.CenterPanel;
 
+        import java.awt.*;
         import java.io.*;
         import java.lang.reflect.Type;
         import java.nio.charset.Charset;
@@ -100,6 +102,15 @@ public class fileIO {
         node.setH(root_object.get("h").getAsDouble());
         node.setW(root_object.get("w").getAsDouble());
         node.setLabelColor(root_object.get("labelColor").getAsInt());
+        CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+        
+        if(centerPanel.getPreferredSize().getHeight() < node.getY() || 0 > node.getY()){
+            centerPanel.setPreferredSize(new Dimension((int)centerPanel.getPreferredSize().getWidth(), (int)centerPanel.getPreferredSize().getHeight() * 2 ));
+        }
+
+        if(centerPanel.getPreferredSize().getWidth() < node.getX() || 0 > node.getX()){
+            centerPanel.setPreferredSize(new Dimension((int)centerPanel.getPreferredSize().getWidth() * 2, (int)centerPanel.getPreferredSize().getHeight()));
+        }
 
         JsonArray jsonArray = root_object.get("child").getAsJsonArray();
         for(int i=0; i<jsonArray.size(); i++){

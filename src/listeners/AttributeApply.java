@@ -27,6 +27,10 @@ public class AttributeApply extends MouseAdapter{
             if(target != null)
                 break;
         }
+        if(target == null){
+            return;
+        }
+
         target.setX(Double.parseDouble(attributePane.getText_x().getText()));
         target.setY(Double.parseDouble(attributePane.getText_y().getText()));
         target.setW(Double.parseDouble(attributePane.getText_w().getText()));
