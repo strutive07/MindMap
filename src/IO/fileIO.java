@@ -35,10 +35,16 @@ public class fileIO {
 
     public static void export_Tree(ArrayList<treeIO> root_list, String path){
         Gson gson = new Gson();
+        JsonObject jsonObject = new JsonObject();
+        TextEditorPane textEditorPane = layout.MainLayout.getLeftPanel();
+        jsonObject.addProperty("TreeTextData", textEditorPane.getTextArea().getText());
+        JsonArray jsonArray = new JsonArray();
         for(int i=0; i<root_list.size(); i++){
-            JsonObject jsonObject = create_Json(root_list.get(i));
-            OutputJson(jsonObject.toString(), path);
+            JsonObject subJsonObject = create_Json(root_list.get(i));
+            jsonArray.add(subJsonObject);
         }
+        jsonObject.add("roots", jsonArray);
+        OutputJson(jsonObject.toString(), path);
     }
 
     public static void import_Json(String filePath){
@@ -54,21 +60,30 @@ public class fileIO {
             JsonParser jsonParser = new JsonParser();
             JsonElement jsonElement = jsonParser.parse(jsonString);
             JsonObject root_object = jsonElement.getAsJsonObject();
-            //TODO root 여러개일 경우로 코드 바꾸기
-            treeIO root_node = new treeIO(root_object.get("name").getAsString(), nodeNumber++);
-            root_node.setX(root_object.get("x").getAsDouble());
-            root_node.setY(root_object.get("y").getAsDouble());
-            root_node.setH(root_object.get("h").getAsDouble());
-            root_node.setW(root_object.get("w").getAsDouble());
-            root_node.setLabelColor(root_object.get("labelColor").getAsInt());
+
             TextEditorPane textEditorPane = layout.MainLayout.getLeftPanel();
             textEditorPane.getTextArea().setText(root_object.get("TreeTextData").getAsString());
-            JsonArray jsonArray = root_object.get("child").getAsJsonArray();
+
+            //TODO root 여러개일 경우로 코드 바꾸기
+
+
+            JsonArray jsonArray = root_object.get("roots").getAsJsonArray();
             for(int i=0; i<jsonArray.size(); i++){
-                root_node.push_child(create_Tree(jsonArray.get(i)));
+                JsonObject root_node_object = jsonArray.get(i).getAsJsonObject();
+                treeIO root_node = new treeIO(root_node_object.get("name").getAsString(), nodeNumber++);
+                root_node.setX(root_node_object.get("x").getAsDouble());
+                root_node.setY(root_node_object.get("y").getAsDouble());
+                root_node.setH(root_node_object.get("h").getAsDouble());
+                root_node.setW(root_node_object.get("w").getAsDouble());
+                root_node.setLabelColor(root_node_object.get("labelColor").getAsInt());
+                JsonArray subJsonArray = root_node_object.get("child").getAsJsonArray();
+
+                for(int j=0; j<subJsonArray.size(); j++){
+                    root_node.push_child(create_Tree(jsonArray.get(i)));
+                }
+                root_list.add(root_node);
+                dfs(root_node);
             }
-            root_list.add(root_node);
-            dfs(root_node);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -88,8 +103,8 @@ public class fileIO {
         jsonObject.addProperty("x", node.getX());
         jsonObject.addProperty("y", node.getY());
         jsonObject.addProperty("labelColor", node.getLabelColor());
-        TextEditorPane textEditorPane = layout.MainLayout.getLeftPanel();
-        jsonObject.addProperty("TreeTextData", textEditorPane.getTextArea().getText());
+
+
 
         JsonArray jsonArray = new JsonArray();
 
@@ -114,11 +129,11 @@ public class fileIO {
         node.setLabelColor(root_object.get("labelColor").getAsInt());
         CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
 
-        if(centerPanel.getPreferredSize().getHeight() < node.getY() || 0 > node.getY()){
+        if(centerPanel.getPreferredSize().getHeight() < node.getY()){
             centerPanel.setPreferredSize(new Dimension((int)centerPanel.getPreferredSize().getWidth(), (int)centerPanel.getPreferredSize().getHeight() * 2 ));
         }
 
-        if(centerPanel.getPreferredSize().getWidth() < node.getX() || 0 > node.getX()){
+        if(centerPanel.getPreferredSize().getWidth() < node.getX()){
             centerPanel.setPreferredSize(new Dimension((int)centerPanel.getPreferredSize().getWidth() * 2, (int)centerPanel.getPreferredSize().getHeight()));
         }
 
