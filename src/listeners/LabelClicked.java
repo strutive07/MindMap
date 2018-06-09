@@ -248,13 +248,16 @@ class dragLabel extends MouseAdapter{
 
                         break;
             }
+
             if(c_size_w <= 20){
                 c_size_w = 20;
             }
             if(c_size_h <= 25){
                 c_size_h = 25;
             }
-
+            AttributePane attributePane = layout.MainLayout.getRightPanel();
+            attributePane.getText_w().setText(Integer.toString(c_size_w));
+            attributePane.getText_h().setText(Integer.toString(c_size_h));
             target_label.setSize(c_size_w, c_size_h);
 
 

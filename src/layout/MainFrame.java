@@ -9,6 +9,8 @@ import java.awt.*;
 import javax.swing.*;
 
 import IO.SaveEvent;
+import com.sun.java.swing.action.ApplyAction;
+import listeners.AttributeApply;
 import sun.plugin.javascript.JSContext;
 import util.ColorTable;
 
@@ -56,13 +58,16 @@ public class MainFrame extends JFrame{
 
 		JMenu editMenu = new JMenu("편집");
 		JMenuItem ApplyItem = new JMenuItem("적용");
+		ApplyItem.addActionListener(new ApplyEvent());
 		JMenuItem ChangeItem = new JMenuItem("변경");
+		ChangeItem.addActionListener(new AttributeApply());
 		editMenu.add(ApplyItem);
 		editMenu.add(ChangeItem);
 		menuBar.add(editMenu);
 
 		JMenu windowMenu = new JMenu("윈도우");
 		JMenuItem exitItem = new JMenuItem("닫기");
+		exitItem.addActionListener(new ExitEvent());
 		windowMenu.add(exitItem);
 		menuBar.add(windowMenu);
 
@@ -117,6 +122,13 @@ public class MainFrame extends JFrame{
 
 						centerPanel.remove(pp[i]);
 					}
+					AttributePane attributePane = layout.MainLayout.getRightPanel();
+					attributePane.getText_TEXT().setText("");
+					attributePane.getText_x().setText("");
+					attributePane.getText_y().setText("");
+					attributePane.getText_w().setText("");
+					attributePane.getText_h().setText("");
+					attributePane.getText_color().setText("");
 
 					centerPanel.revalidate();
 					centerPanel.repaint();
@@ -179,6 +191,31 @@ class ScrollEvent implements AdjustmentListener{
 	public void adjustmentValueChanged(AdjustmentEvent e) {
 		CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
 		centerPanel.setFinish();
+	}
+}
+
+class ApplyEvent implements ActionListener{
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+		MainFrame frame = layout.MainLayout.getFrame();
+		centerPanel.setPreferredSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
+		centerPanel.setSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
+
+		layout.MainLayout.getLeftPanel().makeTree();
+
+		layout.MainLayout.getCenterPanel().setExtensionPoint(null);
+		layout.MainLayout.getCenterPanel().setSelected_Label(null);
+		layout.MainLayout.getCenterPanel().setSelected_Node(null);
+	}
+}
+
+class ExitEvent implements ActionListener{
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		System.exit(0);
 	}
 }
 

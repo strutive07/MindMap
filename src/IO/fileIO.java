@@ -6,6 +6,8 @@ package IO;
         import com.google.gson.stream.JsonReader;
         import jdk.nashorn.internal.parser.JSONParser;
         import layout.CenterPanel;
+        import layout.MainFrame;
+        import layout.TextEditorPane;
 
         import java.awt.*;
         import java.io.*;
@@ -40,11 +42,14 @@ public class fileIO {
     }
 
     public static void import_Json(String filePath){
-
         try {
             String jsonString = readFile(filePath, Charset.defaultCharset());
             ArrayList<treeIO> root_list = layout.MainLayout.getTree();
             root_list.clear();
+            MainFrame frame = layout.MainLayout.getFrame();
+            CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+            centerPanel.setPreferredSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
+            centerPanel.setSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
 
             JsonParser jsonParser = new JsonParser();
             JsonElement jsonElement = jsonParser.parse(jsonString);
@@ -56,6 +61,8 @@ public class fileIO {
             root_node.setH(root_object.get("h").getAsDouble());
             root_node.setW(root_object.get("w").getAsDouble());
             root_node.setLabelColor(root_object.get("labelColor").getAsInt());
+            TextEditorPane textEditorPane = layout.MainLayout.getLeftPanel();
+            textEditorPane.getTextArea().setText(root_object.get("TreeTextData").getAsString());
             JsonArray jsonArray = root_object.get("child").getAsJsonArray();
             for(int i=0; i<jsonArray.size(); i++){
                 root_node.push_child(create_Tree(jsonArray.get(i)));
@@ -81,6 +88,9 @@ public class fileIO {
         jsonObject.addProperty("x", node.getX());
         jsonObject.addProperty("y", node.getY());
         jsonObject.addProperty("labelColor", node.getLabelColor());
+        TextEditorPane textEditorPane = layout.MainLayout.getLeftPanel();
+        jsonObject.addProperty("TreeTextData", textEditorPane.getTextArea().getText());
+
         JsonArray jsonArray = new JsonArray();
 
         for(int i=0; i<node.getChildCount(); i++){
@@ -103,7 +113,7 @@ public class fileIO {
         node.setW(root_object.get("w").getAsDouble());
         node.setLabelColor(root_object.get("labelColor").getAsInt());
         CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
-        
+
         if(centerPanel.getPreferredSize().getHeight() < node.getY() || 0 > node.getY()){
             centerPanel.setPreferredSize(new Dimension((int)centerPanel.getPreferredSize().getWidth(), (int)centerPanel.getPreferredSize().getHeight() * 2 ));
         }

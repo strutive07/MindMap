@@ -84,6 +84,11 @@ public class TextEditorPane extends JPanel{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				super.mouseClicked(e);
+				CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+				MainFrame frame = layout.MainLayout.getFrame();
+				centerPanel.setPreferredSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
+				centerPanel.setSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
+
 				makeTree();
 				layout.MainLayout.getCenterPanel().setExtensionPoint(null);
 				layout.MainLayout.getCenterPanel().setSelected_Label(null);

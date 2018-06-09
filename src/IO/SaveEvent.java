@@ -1,15 +1,13 @@
 package IO;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import algorithm.DisplayLabel;
 import algorithm.SetPosition;
-import layout.AttributePane;
-import layout.CenterPanel;
-import layout.MainLayout;
-import layout.TextEditorPane;
+import layout.*;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -28,9 +26,15 @@ public class SaveEvent implements ActionListener{
                 saveMethod(false);
                 break;
             case "불러오기":
+                CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+                MainFrame frame = layout.MainLayout.getFrame();
+                centerPanel.setPreferredSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
+
                 loadMethod();
                 break;
             case "새로 만들기":
+
+
                 resetMethod();
                 break;
         }
@@ -96,6 +100,9 @@ public class SaveEvent implements ActionListener{
         TextEditorPane textEditorPane = layout.MainLayout.getLeftPanel();
         CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
         AttributePane attributePane = layout.MainLayout.getRightPanel();
+
+        MainFrame frame = layout.MainLayout.getFrame();
+        centerPanel.setPreferredSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
 
         layout.MainLayout.getFrame().setTitle("MindMap By 장원준, 문태진 - FILE : 문서 1(저장 안됨)");
         layout.MainLayout.setFilePath(null);
