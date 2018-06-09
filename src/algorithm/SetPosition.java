@@ -26,7 +26,14 @@ public class SetPosition {
     }
 
     public void make_tree(){
+        double limit_x=0;
 
+        for (int t=0;t<root_list.size();t++){
+            int tree_height=getTreeHeight(root_list.get(t));
+            int max_x=0;
+
+
+        }
     }
 
 
@@ -43,6 +50,8 @@ public class SetPosition {
         now_node.setW(50);
         now_node.setH(31);
         now_node.set_angle(0);
+        double Adj_X=0,Adj_Y=0;
+
         while (!q.isEmpty()){
             now_node=(IO.treeIO)q.peek();
             int sibling_cnt=now_node.getChildCount();
@@ -78,15 +87,42 @@ public class SetPosition {
                 now_node.getChildAt(i).setX(X+Math.cos(angle)*length);
                 now_node.getChildAt(i).setY(Y+Math.sin(angle)*length);
                 now_node.getChildAt(i).setW(50);
-                now_node.getChildAt(i).setH(31);//여기 있는 것들은 차후 width,height값에 따라 변경
-                CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
-                if(centerPanel.getPreferredSize().getHeight() < now_node.getChildAt(i).getY() || 0 > now_node.getChildAt(i).getY()){
-                    centerPanel.setPreferredSize(new Dimension((int)centerPanel.getPreferredSize().getWidth(), (int)centerPanel.getPreferredSize().getHeight() * 2 ));
-                }
+                now_node.getChildAt(i).setH(31);
 
-                if(centerPanel.getPreferredSize().getWidth() < now_node.getChildAt(i).getX() || 0 > now_node.getChildAt(i).getX()){
-                    centerPanel.setPreferredSize(new Dimension((int)centerPanel.getPreferredSize().getWidth() * 2, (int)centerPanel.getPreferredSize().getHeight()));
-                }
+                if (X+Math.cos(angle)*length<-Adj_X)
+                    Adj_X=-(X+Math.cos(angle)*length);
+
+                if (Y+Math.sin(angle)*length<-Adj_Y)
+                    Adj_Y=-(Y+Math.sin(angle)*length);
+
+            }
+
+            q.poll();
+        }
+
+        now_node=root_list.get(0);
+        q.offer(now_node);
+
+        while(!q.isEmpty()){
+            now_node=(treeIO)q.peek();
+            int num=now_node.getChildCount();
+            double X,Y;
+            X=now_node.getX();
+            Y=now_node.getY();
+            now_node.setX(X+Adj_X);
+            now_node.setY(Y+Adj_Y);
+
+            for (int i=0;i<num;i++){
+                q.offer(now_node.getChildAt(i));
+            }
+
+            CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+            if(centerPanel.getPreferredSize().getHeight() < now_node.getY()){
+                centerPanel.setPreferredSize(new Dimension((int)centerPanel.getPreferredSize().getWidth(), (int)centerPanel.getPreferredSize().getHeight() * 2 ));
+            }
+
+            if(centerPanel.getPreferredSize().getWidth() < now_node.getX()){
+                centerPanel.setPreferredSize(new Dimension((int)centerPanel.getPreferredSize().getWidth() * 2, (int)centerPanel.getPreferredSize().getHeight()));
             }
 
             q.poll();
@@ -165,7 +201,7 @@ public class SetPosition {
                             ex=child_X+(child_W/2.0);
                             ey=child_Y+child_H;
                         }
-                        else if (grd>-H/W && grd<H/W){
+                        else if (grd>-H/W && grd<H/W && child_X>X){
                             now_node.set_exit(X+W,Y+H/2.0);
                             now_node.getChildAt(i).set_enter(child_X, child_Y+child_H/2.0);
                             sx=X+W;
