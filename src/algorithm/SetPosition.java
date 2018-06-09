@@ -153,6 +153,10 @@ public class SetPosition {
         double grd,grd1,grd2;
 
         boolean flag1=false,flag2=false;
+        ArrayList<Double>  tmp_sx=new ArrayList<Double>();
+        ArrayList<Double>  tmp_sy=new ArrayList<Double>();
+        ArrayList<Double>  tmp_ex=new ArrayList<Double>();
+        ArrayList<Double>  tmp_ey=new ArrayList<Double>();
 
         for (int t=0;t<root_list.size();t++){
             treeIO now_node=root_list.get(t);
@@ -231,14 +235,24 @@ public class SetPosition {
                         ey=child_Y+H;
                     }
 
-                    centerPanel.start_x.add(sx);
-                    centerPanel.start_y.add(sy);
-                    centerPanel.end_x.add(ex);
-                    centerPanel.end_y.add(ey);
+                    tmp_sx.add(sx);
+                    tmp_sy.add(sy);
+                    tmp_ex.add(ex);
+                    tmp_ey.add(ey);
                 }
                 q.poll();
 
             }
+
+            centerPanel.start_x.add(tmp_sx);
+            centerPanel.start_y.add(tmp_sy);
+            centerPanel.end_x.add(tmp_ex);
+            centerPanel.end_y.add(tmp_ey);
+
+            tmp_sx.clear();
+            tmp_sy.clear();
+            tmp_ex.clear();
+            tmp_ey.clear();
         }
     }
 

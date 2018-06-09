@@ -4,6 +4,7 @@ import IO.treeIO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CenterPanel extends JPanel{
@@ -12,10 +13,10 @@ public class CenterPanel extends JPanel{
     boolean isFinish = false;
     JLabel selected_Label;
     treeIO selected_Node;
-    public ArrayList<Double> start_x;
-    public ArrayList<Double> start_y;
-    public ArrayList<Double> end_x;
-    public ArrayList<Double> end_y;
+    public ArrayList<ArrayList<Double>> start_x;
+    public ArrayList<ArrayList<Double>> start_y;
+    public ArrayList<ArrayList<Double>> end_x;
+    public ArrayList<ArrayList<Double>> end_y;
 
     public JLabel[] getExtensionPoint() {
         return extensionPoint;
@@ -44,11 +45,11 @@ public class CenterPanel extends JPanel{
     }
 
     public CenterPanel(){
-        start_x=new ArrayList<Double>();
-        start_y=new ArrayList<Double>();
-        end_x=new ArrayList<Double>();
-        end_y=new ArrayList<Double>();
-        isFinish = false;
+        start_x=new ArrayList<ArrayList<Double>>();
+        start_y=new ArrayList<ArrayList<Double>>();
+        end_x=new ArrayList<ArrayList<Double>>();
+        end_y=new ArrayList<ArrayList<Double>>();
+        isFinish = false;ㄱ
         extensionPoint = null;
         selected_Label = null;
         selected_Node = null;
