@@ -69,6 +69,7 @@ public class fileIO {
 
             JsonArray jsonArray = root_object.get("roots").getAsJsonArray();
             for(int i=0; i<jsonArray.size(); i++){
+                System.out.println("roots size : " + jsonArray.size());
                 JsonObject root_node_object = jsonArray.get(i).getAsJsonObject();
                 treeIO root_node = new treeIO(root_node_object.get("name").getAsString(), nodeNumber++);
                 root_node.setX(root_node_object.get("x").getAsDouble());
@@ -79,7 +80,8 @@ public class fileIO {
                 JsonArray subJsonArray = root_node_object.get("child").getAsJsonArray();
 
                 for(int j=0; j<subJsonArray.size(); j++){
-                    root_node.push_child(create_Tree(jsonArray.get(i)));
+                    System.out.println("roots childs size : " + subJsonArray.size());
+                    root_node.push_child(create_Tree(subJsonArray.get(j)));
                 }
                 root_list.add(root_node);
                 dfs(root_node);
