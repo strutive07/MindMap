@@ -89,7 +89,7 @@ public class SaveEvent implements ActionListener{
             CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
             SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
             setPosition.set_line();
-            centerPanel.setFinish();
+            centerPanel.setFinish(0);
 
             layout.MainLayout.setFilePath(path);
             layout.MainLayout.getFrame().setTitle("Mind Map - FILE : " + path);

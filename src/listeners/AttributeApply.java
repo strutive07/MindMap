@@ -77,6 +77,6 @@ public class AttributeApply extends MouseAdapter implements ActionListener{
 
         SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
         setPosition.set_line();
-        centerPanel.setFinish();
+        centerPanel.setFinish(0);
     }
 }

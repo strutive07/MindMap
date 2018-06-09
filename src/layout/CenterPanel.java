@@ -17,6 +17,7 @@ public class CenterPanel extends JPanel{
     public ArrayList<ArrayList<Double>> start_y;
     public ArrayList<ArrayList<Double>> end_x;
     public ArrayList<ArrayList<Double>> end_y;
+    int index;
 
     public JLabel[] getExtensionPoint() {
         return extensionPoint;
@@ -49,7 +50,7 @@ public class CenterPanel extends JPanel{
         start_y=new ArrayList<ArrayList<Double>>();
         end_x=new ArrayList<ArrayList<Double>>();
         end_y=new ArrayList<ArrayList<Double>>();
-        isFinish = false;ㄱ
+        isFinish = false;
         extensionPoint = null;
         selected_Label = null;
         selected_Node = null;
@@ -64,8 +65,9 @@ public class CenterPanel extends JPanel{
         isFinish = false;
     }
 
-    public void setFinish(){
+    public void setFinish(int i){
         isFinish = true;
+        index = i;
         repaint();
     }
 
@@ -75,12 +77,13 @@ public class CenterPanel extends JPanel{
         super.paintComponent(g);
         if(isFinish == true){
             for(int i=0; i<start_x.size(); i++){
-                double sx = start_x.get(i);
-                double sy = start_y.get(i);
-                double ex = end_x.get(i);
-                double ey = end_y.get(i);
+                double sx = start_x.get(index).get(i);
+                double sy = start_y.get(index).get(i);
+                double ex = end_x.get(index).get(i);
+                double ey = end_y.get(index).get(i);
                 g.drawLine((int)sx, (int)sy, (int)ex, (int)ey);
             }
+            index = 0;
             isFinish = false;
         }
     }

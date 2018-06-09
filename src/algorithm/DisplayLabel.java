@@ -31,7 +31,7 @@ public class DisplayLabel {
         centerPanel.repaint();
         layout.MainLayout.setLabels(labels);
         CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
-        centerPanel.setFinish();
+        centerPanel.setFinish(0);
     }
 
 

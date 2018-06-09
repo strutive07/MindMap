@@ -132,7 +132,7 @@ public class MainFrame extends JFrame{
 
 					centerPanel.revalidate();
 					centerPanel.repaint();
-					centerPanel.setFinish();
+					centerPanel.setFinish(0);
 				}
 				JLabel before_label = centerPanel.getSelected_Label();
 				if(before_label != null){
@@ -182,7 +182,7 @@ public class MainFrame extends JFrame{
 		leftPanel.setTopLabelFontSize((int)this.getSize().getWidth()/6);
 		rightPanel.setTopLabelFontSize((int)this.getSize().getWidth()/6);
 		CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
-		centerPanel.setFinish();
+		centerPanel.setFinish(0);
 	}
 }
 class ScrollEvent implements AdjustmentListener{
@@ -190,7 +190,7 @@ class ScrollEvent implements AdjustmentListener{
 	@Override
 	public void adjustmentValueChanged(AdjustmentEvent e) {
 		CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
-		centerPanel.setFinish();
+		centerPanel.setFinish(0);
 	}
 }
 
