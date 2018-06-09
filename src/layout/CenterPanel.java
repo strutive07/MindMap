@@ -76,12 +76,14 @@ public class CenterPanel extends JPanel{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if(isFinish == true){
-            for(int i=0; i<start_x.size(); i++){
-                double sx = start_x.get(index).get(i);
-                double sy = start_y.get(index).get(i);
-                double ex = end_x.get(index).get(i);
-                double ey = end_y.get(index).get(i);
-                g.drawLine((int)sx, (int)sy, (int)ex, (int)ey);
+            for (int idx=0;idx<start_x.size();idx++) {
+                for (int i = 0; i < start_x.get(idx).size(); i++) {
+                    double sx = start_x.get(idx).get(i);
+                    double sy = start_y.get(idx).get(i);
+                    double ex = end_x.get(idx).get(i);
+                    double ey = end_y.get(idx).get(i);
+                    g.drawLine((int) sx, (int) sy, (int) ex, (int) ey);
+                }
             }
             index = 0;
             isFinish = false;
