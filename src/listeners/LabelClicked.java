@@ -48,7 +48,9 @@ public class LabelClicked extends MouseAdapter{
         }
         SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
         setPosition.set_line();
-        centerPanel.setFinish(0);
+        MainFrame frame = layout.MainLayout.getFrame();
+        centerPanel.setFinish(frame.getNow_selected_root());
+
 
     }
 
@@ -149,7 +151,9 @@ public class LabelClicked extends MouseAdapter{
 
         centerPanel.revalidate();
         centerPanel.repaint();
-        centerPanel.setFinish(0);
+        MainFrame frame = layout.MainLayout.getFrame();
+        centerPanel.setFinish(frame.getNow_selected_root());
+
         centerPanel.setSelected_Label(jLabel);
     }
 }
@@ -280,7 +284,9 @@ class dragLabel extends MouseAdapter{
 
             SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
             setPosition.set_line();
-            centerPanel.setFinish(0);
+            MainFrame frame = layout.MainLayout.getFrame();
+            centerPanel.setFinish(frame.getNow_selected_root());
+
         }
     }
 }

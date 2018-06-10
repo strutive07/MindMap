@@ -20,8 +20,27 @@ public class MainFrame extends JFrame{
 	TextEditorPane leftPanel;
 	JPanel centerPanel;
     AttributePane rightPanel;
+	JToolBar toolBar;
+	int now_selected_root;
 
-    public MainFrame(){
+	public int getNow_selected_root() {
+		return now_selected_root;
+	}
+
+	public void setNow_selected_root(int now_selected_root) {
+		this.now_selected_root = now_selected_root;
+	}
+
+	public JToolBar getToolBar() {
+		return toolBar;
+	}
+
+	public void setToolBar(JToolBar toolBar) {
+		this.toolBar = toolBar;
+	}
+
+	public MainFrame(){
+		now_selected_root = 0;
 		setTitle("MindMap By 장원준, 문태진 - FILE : 문서 1(저장 안됨)");
 
 		
@@ -80,7 +99,7 @@ public class MainFrame extends JFrame{
 	}
 	private void createToolBar() {
 		SaveEvent saveEvent = new SaveEvent();
-		JToolBar toolBar = new JToolBar("ToolBar");
+		toolBar = new JToolBar("ToolBar");
 		toolBar.setBackground(ColorTable.ToolBar_blue);
 		toolBar.setFloatable(false);
 		JButton saveButton = new JButton("저장");
@@ -91,8 +110,12 @@ public class MainFrame extends JFrame{
 
 		toolBar.add(saveButton);
 		toolBar.add(loadButton);
+		toolBar.add(reSaveButton);
 		getContentPane().add(toolBar, BorderLayout.NORTH);
+
+
 	}
+
 	private void createSplitPane() {
 		
 		this.getContentPane().setLayout(new BorderLayout());
@@ -132,7 +155,7 @@ public class MainFrame extends JFrame{
 
 					centerPanel.revalidate();
 					centerPanel.repaint();
-					centerPanel.setFinish(0);
+					centerPanel.setFinish(now_selected_root);
 				}
 				JLabel before_label = centerPanel.getSelected_Label();
 				if(before_label != null){
@@ -151,9 +174,22 @@ public class MainFrame extends JFrame{
         layout.MainLayout.setRightPanel(rightPanel);
 
         JScrollPane rightScrollPanel = new JScrollPane(rightPanel);
+        MainFrame frame = this;
 
-		centerScrollPanel.getHorizontalScrollBar().addAdjustmentListener(new ScrollEvent());
-		centerScrollPanel.getVerticalScrollBar().addAdjustmentListener(new ScrollEvent());
+		centerScrollPanel.getHorizontalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent e) {
+				CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+				centerPanel.setFinish(frame.getNow_selected_root());
+			}
+		});
+		centerScrollPanel.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent e) {
+				CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+				centerPanel.setFinish(frame.getNow_selected_root());
+			}
+		});
 
         sp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         sp2 = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -182,17 +218,19 @@ public class MainFrame extends JFrame{
 		leftPanel.setTopLabelFontSize((int)this.getSize().getWidth()/6);
 		rightPanel.setTopLabelFontSize((int)this.getSize().getWidth()/6);
 		CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
-		centerPanel.setFinish(0);
+		centerPanel.setFinish(now_selected_root);
 	}
 }
-class ScrollEvent implements AdjustmentListener{
-
-	@Override
-	public void adjustmentValueChanged(AdjustmentEvent e) {
-		CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
-		centerPanel.setFinish(0);
-	}
-}
+//class ScrollEvent implements AdjustmentListener{
+//
+//	@Override
+//	public void adjustmentValueChanged(AdjustmentEvent e) {
+//		CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+//		MainFrame frame = layout.MainLayout.getFrame();
+//
+//		centerPanel.setFinish(frame.getNow_selected_root());
+//	}
+//}
 
 class ApplyEvent implements ActionListener{
 

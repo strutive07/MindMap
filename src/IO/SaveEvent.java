@@ -82,7 +82,7 @@ public class SaveEvent implements ActionListener{
             String path = jFileChooser.getSelectedFile().getPath();
             fileIO.import_Json(path);
             DisplayLabel displayLabel = new DisplayLabel();
-            displayLabel.display();
+            displayLabel.display(0);
             String file_name = jFileChooser.getSelectedFile().getName();
             layout.MainLayout.getFrame().setTitle("Mind Map - FILE : " + file_name);
 

@@ -102,14 +102,7 @@ public class SetPosition {
                     q.offer(now_node.getChildAt(i));
                 }
 
-                CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
-                if (centerPanel.getPreferredSize().getHeight() < now_node.getY()) {
-                    centerPanel.setPreferredSize(new Dimension((int) centerPanel.getPreferredSize().getWidth(), (int) centerPanel.getPreferredSize().getHeight() * 2));
-                }
 
-                if (centerPanel.getPreferredSize().getWidth() < now_node.getX()) {
-                    centerPanel.setPreferredSize(new Dimension((int) centerPanel.getPreferredSize().getWidth() * 2, (int) centerPanel.getPreferredSize().getHeight()));
-                }
 
                 q.poll();
             }
@@ -153,12 +146,13 @@ public class SetPosition {
         double grd,grd1,grd2;
 
         boolean flag1=false,flag2=false;
-        ArrayList<Double>  tmp_sx=new ArrayList<Double>();
-        ArrayList<Double>  tmp_sy=new ArrayList<Double>();
-        ArrayList<Double>  tmp_ex=new ArrayList<Double>();
-        ArrayList<Double>  tmp_ey=new ArrayList<Double>();
+
 
         for (int t=0;t<root_list.size();t++){
+            ArrayList<Double>  tmp_sx=new ArrayList<Double>();
+            ArrayList<Double>  tmp_sy=new ArrayList<Double>();
+            ArrayList<Double>  tmp_ex=new ArrayList<Double>();
+            ArrayList<Double>  tmp_ey=new ArrayList<Double>();
             treeIO now_node=root_list.get(t);
             q.offer(now_node);
             while(!q.isEmpty()){
@@ -245,14 +239,12 @@ public class SetPosition {
             }
 
             centerPanel.start_x.add(tmp_sx);
+
             centerPanel.start_y.add(tmp_sy);
             centerPanel.end_x.add(tmp_ex);
             centerPanel.end_y.add(tmp_ey);
 
-            tmp_sx.clear();
-            tmp_sy.clear();
-            tmp_ex.clear();
-            tmp_ey.clear();
+
         }
     }
 

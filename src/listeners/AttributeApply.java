@@ -4,6 +4,7 @@ import IO.treeIO;
 import algorithm.SetPosition;
 import layout.AttributePane;
 import layout.CenterPanel;
+import layout.MainFrame;
 import util.ColorTable;
 import util.FindNodeByTarget;
 
@@ -77,6 +78,7 @@ public class AttributeApply extends MouseAdapter implements ActionListener{
 
         SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
         setPosition.set_line();
-        centerPanel.setFinish(0);
+        MainFrame frame = layout.MainLayout.getFrame();
+        centerPanel.setFinish(frame.getNow_selected_root());
     }
 }

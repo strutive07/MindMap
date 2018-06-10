@@ -3,6 +3,7 @@ package layout;
 import IO.treeIO;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ public class CenterPanel extends JPanel{
     public ArrayList<ArrayList<Double>> end_x;
     public ArrayList<ArrayList<Double>> end_y;
     int index;
+
 
     public JLabel[] getExtensionPoint() {
         return extensionPoint;
@@ -76,7 +78,12 @@ public class CenterPanel extends JPanel{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if(isFinish == true){
+
             for (int idx=0;idx<start_x.size();idx++) {
+
+                if(idx != index){
+                    continue;
+                }
                 for (int i = 0; i < start_x.get(idx).size(); i++) {
                     double sx = start_x.get(idx).get(i);
                     double sy = start_y.get(idx).get(i);

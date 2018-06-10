@@ -15,14 +15,20 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 public class DisplayLabel {
-    JPanel centerPanel;
+
     JScrollPane jScrollPane;
 
-    public void display(){
+    public void display(int root_number){
 
         ArrayList<treeIO> root_list = layout.MainLayout.getTree();
         //TODO 루트 2개 이상인거 구현하기
-        treeIO root = root_list.get(0);
+        MainFrame frame = layout.MainLayout.getFrame();
+
+        CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+        centerPanel.setPreferredSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
+        centerPanel.setSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
+
+        treeIO root = root_list.get(root_number);
         centerPanel = layout.MainLayout.getCenterPanel();
         centerPanel.removeAll();
         ArrayList<JLabel> labels = new ArrayList<JLabel>();
@@ -30,12 +36,13 @@ public class DisplayLabel {
         centerPanel.revalidate();
         centerPanel.repaint();
         layout.MainLayout.setLabels(labels);
-        CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
-        centerPanel.setFinish(0);
+
+        centerPanel.setFinish(root_number);
     }
 
 
     private void sub_displayNode(treeIO node, ArrayList<JLabel> labels){
+        CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
         JLabel label = new JLabel(node.getStringName(), SwingConstants.CENTER);
         label.setBounds((int)node.getX(), (int)node.getY(), (int)node.getW(), (int)node.getH());
 //        label.setSize((int)node.getW(), (int)node.getH());
@@ -53,6 +60,15 @@ public class DisplayLabel {
         centerPanel.revalidate();
         centerPanel.repaint();
         label.setVisible(true);
+
+
+        if (centerPanel.getPreferredSize().getHeight() < node.getY()) {
+            centerPanel.setPreferredSize(new Dimension((int) centerPanel.getPreferredSize().getWidth(), (int) centerPanel.getPreferredSize().getHeight() * 2));
+        }
+
+        if (centerPanel.getPreferredSize().getWidth() < node.getX()) {
+            centerPanel.setPreferredSize(new Dimension((int) centerPanel.getPreferredSize().getWidth() * 2, (int) centerPanel.getPreferredSize().getHeight()));
+        }
 
 
         for(int i=0; i<node.getChildCount(); i++){
