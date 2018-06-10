@@ -13,6 +13,8 @@ public class treeIO{
     private int Tree_depth;
     private int LabelColor;
     private double angle;
+    private double lim_angle;
+    private int length_from_parent;
     private int nodeNumber;
     private double enter_x,enter_y;
     private ArrayList<Double> exit_x;
@@ -150,6 +152,22 @@ public class treeIO{
     public double get_angle(){
         return angle;
     }
+
+    public void set_lim_angle(double x){
+        lim_angle=x;
+    }
+
+    public double get_lim_angle(){
+        return lim_angle;
+    }
+    public void set_length_from_parent(int x){
+        length_from_parent=x;
+    }
+
+    public int get_length_from_parent(){
+        return length_from_parent;
+    }
+
 
     public void set_enter(double x,double y){
         enter_x=x;

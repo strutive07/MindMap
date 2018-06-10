@@ -50,21 +50,41 @@ public class SetPosition {
 
                 int sibling_num = number_of_sibiling(now_node);
                 int num = now_node.get_child_number_in_parent();
-                double lim_angle = ((double) 1 / (double) sibling_num + 0.2) * Math.PI * 2;
-                if (lim_angle > Math.PI * 2.0 / 3.6)
-                    lim_angle = Math.PI * 2.0 / 3.6;
+                double lim_angle = ((double) 1 / (double) sibling_num) * Math.PI * 2;
 
-                int length = 100 + (int) (sibling_cnt * 25 / lim_angle);
+                int length = 100 + sibling_cnt*10;
+
+                int a=now_node.get_length_from_parent();
+                int b=length;
+                double d=now_node.get_lim_angle()/2.0;
+                double limit;
+                 if(a!=b)
+                     limit=2*2*(Math.PI+Math.atan((b*(1.0/d)-Math.sqrt(-Math.pow(a,2)+Math.pow(b,2)+Math.pow(b,2)*Math.pow((1.0)/d,2)))/(double)(a-b)));
+                 else
+                     limit=Math.PI/2.0;
+
+                if (now_node.get_child_number_in_parent()!=-1){
+                    if (lim_angle>limit)
+                        lim_angle=limit;
+                }
 
                 for (int i = 0; i < sibling_cnt; i++) {
                     double angle;
-                    if (now_node.get_child_number_in_parent() == -1)
+                    now_node.getChildAt(i).set_length_from_parent(length);
+                    if (now_node.get_child_number_in_parent() == -1) {
                         angle = ((double) i / (double) sibling_cnt) * Math.PI * 2;
+                        now_node.getChildAt(i).set_lim_angle((1.0 / (double) sibling_cnt) * Math.PI * 2);
+                    }
                     else {
                         if (sibling_cnt == 1) {
                             angle = now_node.get_angle();
+                            if (now_node.getParent().get_lim_angle()!=0) {
+                                now_node.getChildAt(i).set_lim_angle(now_node.getParent().get_lim_angle());
+                                now_node.getChildAt(i).set_length_from_parent(length+now_node.getParent().get_length_from_parent());
+                            }
                         } else {
                             angle = (now_node.get_angle() - (lim_angle / 2.0)) + (lim_angle / (double) (sibling_cnt - 1)) * i;
+                            now_node.set_lim_angle((now_node.get_angle() - (lim_angle / 2.0)) + (lim_angle / (double) (sibling_cnt - 1)));
                         }
                     }
 
@@ -86,7 +106,7 @@ public class SetPosition {
                 q.poll();
             }
 
-            now_node = root_list.get(0);
+            now_node = root_list.get(t);
             q.offer(now_node);
 
             while (!q.isEmpty()) {
