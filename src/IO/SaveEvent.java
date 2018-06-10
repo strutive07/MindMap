@@ -81,6 +81,57 @@ public class SaveEvent implements ActionListener{
         if(return_value == JFileChooser.APPROVE_OPTION){
             String path = jFileChooser.getSelectedFile().getPath();
             fileIO.import_Json(path);
+
+
+
+
+            ArrayList<treeIO> root_list = layout.MainLayout.getTree();
+            JToolBar jToolBar = layout.MainLayout.getFrame().getToolBar();
+            jToolBar.removeAll();
+
+            SaveEvent saveEvent = new SaveEvent();
+            JButton saveButton = new JButton("저장");
+            saveButton.addActionListener(saveEvent);
+            JButton loadButton = new JButton("불러오기");
+            loadButton.addActionListener(saveEvent);
+            JButton reSaveButton = new JButton("다른 이름으로 저장");
+
+            jToolBar.add(saveButton);
+            jToolBar.add(loadButton);
+            jToolBar.add(reSaveButton);
+            jToolBar.addSeparator();
+
+
+            for(int i=0; i<root_list.size(); i++){
+                final int idx = i;
+                JButton root_button = new JButton("마인드맵 " + (i + 1));
+                root_button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        DisplayLabel displayLabel = new DisplayLabel();
+                        MainFrame frame = layout.MainLayout.getFrame();
+                        frame.setNow_selected_root(idx);
+                        displayLabel.display(frame.getNow_selected_root());
+                        layout.MainLayout.getCenterPanel().setExtensionPoint(null);
+                        layout.MainLayout.getCenterPanel().setSelected_Label(null);
+                        layout.MainLayout.getCenterPanel().setSelected_Node(null);
+
+                        AttributePane attributePane = layout.MainLayout.getRightPanel();
+                        attributePane.getText_TEXT().setText("");
+                        attributePane.getText_x().setText("");
+                        attributePane.getText_y().setText("");
+                        attributePane.getText_w().setText("");
+                        attributePane.getText_h().setText("");
+                        attributePane.getText_color().setText("");
+                    }
+                });
+                jToolBar.add(root_button);
+            }
+            jToolBar.revalidate();
+            jToolBar.repaint();
+
+
+
             DisplayLabel displayLabel = new DisplayLabel();
             displayLabel.display(0);
             String file_name = jFileChooser.getSelectedFile().getName();
@@ -123,6 +174,21 @@ public class SaveEvent implements ActionListener{
         attributePane.getText_w().setText("");
         attributePane.getText_h().setText("");
         attributePane.getText_color().setText("");
+        JToolBar jToolBar = layout.MainLayout.getFrame().getToolBar();
+        jToolBar.removeAll();
+        SaveEvent saveEvent = new SaveEvent();
+        JButton saveButton = new JButton("저장");
+        saveButton.addActionListener(saveEvent);
+        JButton loadButton = new JButton("불러오기");
+        loadButton.addActionListener(saveEvent);
+        JButton reSaveButton = new JButton("다른 이름으로 저장");
+
+        jToolBar.add(saveButton);
+        jToolBar.add(loadButton);
+        jToolBar.add(reSaveButton);
+        
+        jToolBar.revalidate();
+        jToolBar.repaint();
 
     }
 }

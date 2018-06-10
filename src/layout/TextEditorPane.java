@@ -94,6 +94,7 @@ public class TextEditorPane extends JPanel{
 				centerPanel.setSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
 
 				makeTree();
+
 				ArrayList<treeIO> root_list = layout.MainLayout.getTree();
 				JToolBar jToolBar = layout.MainLayout.getFrame().getToolBar();
 				jToolBar.removeAll();
@@ -108,11 +109,12 @@ public class TextEditorPane extends JPanel{
 				jToolBar.add(saveButton);
 				jToolBar.add(loadButton);
 				jToolBar.add(reSaveButton);
+				jToolBar.addSeparator();
 
 
 				for(int i=0; i<root_list.size(); i++){
 					final int idx = i;
-					JButton root_button = new JButton("마인드맵 " + i + 1);
+					JButton root_button = new JButton("마인드맵 " + (i + 1));
 					root_button.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
@@ -134,11 +136,13 @@ public class TextEditorPane extends JPanel{
 					});
 					jToolBar.add(root_button);
 				}
+				jToolBar.revalidate();
+				jToolBar.repaint();
+
 				layout.MainLayout.getCenterPanel().setExtensionPoint(null);
 				layout.MainLayout.getCenterPanel().setSelected_Label(null);
 				layout.MainLayout.getCenterPanel().setSelected_Node(null);
-				jToolBar.revalidate();
-				jToolBar.repaint();
+
 			}
 		});
 	}

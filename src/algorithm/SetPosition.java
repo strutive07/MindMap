@@ -86,7 +86,7 @@ public class SetPosition {
                 q.poll();
             }
 
-            now_node = root_list.get(0);
+            now_node = root_list.get(t);
             q.offer(now_node);
 
             while (!q.isEmpty()) {
