@@ -97,6 +97,7 @@ public class TextEditorPane extends JPanel{
 				ArrayList<treeIO> root_list = layout.MainLayout.getTree();
 				JToolBar jToolBar = layout.MainLayout.getFrame().getToolBar();
 				jToolBar.removeAll();
+
 				SaveEvent saveEvent = new SaveEvent();
 				JButton saveButton = new JButton("저장");
 				saveButton.addActionListener(saveEvent);
@@ -107,6 +108,7 @@ public class TextEditorPane extends JPanel{
 				jToolBar.add(saveButton);
 				jToolBar.add(loadButton);
 				jToolBar.add(reSaveButton);
+
 
 				for(int i=0; i<root_list.size(); i++){
 					final int idx = i;
@@ -135,6 +137,8 @@ public class TextEditorPane extends JPanel{
 				layout.MainLayout.getCenterPanel().setExtensionPoint(null);
 				layout.MainLayout.getCenterPanel().setSelected_Label(null);
 				layout.MainLayout.getCenterPanel().setSelected_Node(null);
+				jToolBar.revalidate();
+				jToolBar.repaint();
 			}
 		});
 	}
