@@ -1,5 +1,6 @@
 package listeners;
 
+import IO.SaveEvent;
 import IO.treeIO;
 import algorithm.SetPosition;
 import layout.AttributePane;
@@ -187,34 +188,94 @@ class dragLabel extends MouseAdapter{
             int c_size_h;
             int x = e.getX() - (int)extensionLabel_one.getSize().getWidth() / 2;
             int y = e.getY() - (int) extensionLabel_one.getSize().getHeight() / 2;
-
+            int xflag = 0;
+            int yflag = 0;
             switch (extensionLabelNumber){
                 case 0:
                     c_size_w = (int)target_label.getSize().getWidth() - x;
                     c_size_h = (int)target_label.getSize().getHeight() - y;
                     extensionLabel_one.setLocation(extensionLabel_one.getLocation().x + x, extensionLabel_one.getLocation().y + y);
-                    target_label.setLocation(target_label.getLocation().x + x, target_label.getLocation().y + y);
+                    xflag = 0;
+                    yflag = 0;
+
+                    if(c_size_w <= 20){
+                        c_size_w = 20;
+                        xflag = 1;
+                    }
+                    if(c_size_h <= 25){
+                        c_size_h = 25;
+                        yflag = 1;
+                    }
+                    if(xflag == 0 && yflag == 0){
+                        target_label.setLocation(target_label.getLocation().x + x, target_label.getLocation().y + y);
+                        target_label.setSize(c_size_w, c_size_h);
+                    }else if(xflag == 0 && yflag == 1){
+                        target_label.setLocation(target_label.getLocation().x + x, target_label.getLocation().y);
+                        target_label.setSize(c_size_w, c_size_h);
+                    }else if(xflag == 1&& yflag == 0){
+                        target_label.setLocation(target_label.getLocation().x, target_label.getLocation().y + y);
+                        target_label.setSize(c_size_w, c_size_h);
+                    }
 
                     break;
                 case 1:
                     c_size_w = (int)target_label.getSize().getWidth();
                     c_size_h = (int)target_label.getSize().getHeight() - y;
                     extensionLabel_one.setLocation(extensionLabel_one.getLocation().x, extensionLabel_one.getLocation().y + y);
-                    target_label.setLocation(target_label.getLocation().x, target_label.getLocation().y + y);
+
+                    if(c_size_h <= 25){
+                        c_size_h = 25;
+
+                    }else{
+                        target_label.setLocation(target_label.getLocation().x, target_label.getLocation().y + y);
+                        target_label.setSize(c_size_w, c_size_h);
+                    }
+
 
                     break;
                 case 2:
                     c_size_w = (int)target_label.getSize().getWidth() + x;
                     c_size_h = (int)target_label.getSize().getHeight() - y;
                     extensionLabel_one.setLocation(extensionLabel_one.getLocation().x + x, extensionLabel_one.getLocation().y + y);
-                    target_label.setLocation(target_label.getLocation().x, target_label.getLocation().y + y);
+
+
+                    if(c_size_w <= 20){
+                        c_size_w = 20;
+                        xflag = 1;
+
+                    }
+                    if(c_size_h <= 25){
+                        c_size_h = 25;
+                        yflag = 1;
+                    }
+
+                    if(xflag == 0 && yflag == 0){
+                        target_label.setLocation(target_label.getLocation().x, target_label.getLocation().y + y);
+                        target_label.setSize(c_size_w, c_size_h);
+                    }else if(xflag == 0 && yflag == 1){
+//                        target_label.setLocation(target_label.getLocation().x + x, target_label.getLocation().y);
+                        target_label.setSize(c_size_w, c_size_h);
+                    }else if(xflag == 1 && yflag == 0){
+                        target_label.setLocation(target_label.getLocation().x, target_label.getLocation().y + y);
+                        target_label.setSize(c_size_w, c_size_h);
+                    }
+
 
                     break;
                 case 3:
                     c_size_w = (int)target_label.getSize().getWidth() - x;
                     c_size_h = (int)target_label.getSize().getHeight();
                     extensionLabel_one.setLocation(extensionLabel_one.getLocation().x + x, extensionLabel_one.getLocation().y);
-                    target_label.setLocation(target_label.getLocation().x + x, target_label.getLocation().y);
+
+
+                    if(c_size_w <= 20){
+                        c_size_w = 20;
+                    }else{
+                        target_label.setLocation(target_label.getLocation().x + x, target_label.getLocation().y);
+                        target_label.setSize(c_size_w, c_size_h);
+                    }
+
+
 
                     break;
                 case 4:
@@ -222,26 +283,68 @@ class dragLabel extends MouseAdapter{
                     c_size_h = (int)target_label.getSize().getHeight();
                     extensionLabel_one.setLocation(extensionLabel_one.getLocation().x + x, extensionLabel_one.getLocation().y);
 //                    target_label.setLocation(target_label.getLocation().x + x, target_label.getLocation().y);
+                    if(c_size_w <= 20){
+                        c_size_w = 20;
+                    }else{
+                        target_label.setSize(c_size_w, c_size_h);
+                    }
 
                     break;
                 case 5:
                     c_size_w = (int)target_label.getSize().getWidth() - x;
                     c_size_h = (int)target_label.getSize().getHeight() + y;
                     extensionLabel_one.setLocation(extensionLabel_one.getLocation().x + x, extensionLabel_one.getLocation().y + y);
-                    target_label.setLocation(target_label.getLocation().x + x, target_label.getLocation().y);
+//                    target_label.setLocation(target_label.getLocation().x + x, target_label.getLocation().y);
+                    if(c_size_w <= 20){
+                        c_size_w = 20;
+                        xflag = 1;
+
+                    }
+                    if(c_size_h <= 25){
+                        c_size_h = 25;
+                        yflag = 1;
+                    }
+
+                    if(xflag == 0 && yflag == 0){
+                        target_label.setLocation(target_label.getLocation().x + x, target_label.getLocation().y );
+                        target_label.setSize(c_size_w, c_size_h);
+                    }else if(xflag == 0 && yflag == 1){
+                        target_label.setLocation(target_label.getLocation().x + x, target_label.getLocation().y);
+                        target_label.setSize(c_size_w, c_size_h);
+                    }else if(xflag == 1 && yflag == 0){
+                        target_label.setSize(c_size_w, c_size_h);
+                    }
 
                     break;
                 case 6:
                     c_size_w = (int)target_label.getSize().getWidth();
                     c_size_h = (int)target_label.getSize().getHeight() + y;
                     extensionLabel_one.setLocation(extensionLabel_one.getLocation().x, extensionLabel_one.getLocation().y + y);
-                    target_label.setLocation(target_label.getLocation().x, target_label.getLocation().y);
 
+
+                    if(c_size_h <= 25){
+                        c_size_h = 25;
+                    }else{
+                        target_label.setLocation(target_label.getLocation().x, target_label.getLocation().y);
+                        target_label.setSize(c_size_w, c_size_h);
+                    }
                     break;
                 case 7:
                     c_size_w = (int)target_label.getSize().getWidth() + x;
                     c_size_h = (int)target_label.getSize().getHeight() + y;
                     extensionLabel_one.setLocation(extensionLabel_one.getLocation().x + x, extensionLabel_one.getLocation().y + y);
+                    if(c_size_w <= 20){
+                        c_size_w = 20;
+                        xflag = 1;
+
+                    }
+                    if(c_size_h <= 25){
+                        c_size_h = 25;
+                        yflag = 1;
+                    }
+                    target_label.setSize(c_size_w, c_size_h);
+
+                        
 
                     break;
                     default:
@@ -253,16 +356,11 @@ class dragLabel extends MouseAdapter{
                         break;
             }
 
-            if(c_size_w <= 20){
-                c_size_w = 20;
-            }
-            if(c_size_h <= 25){
-                c_size_h = 25;
-            }
+
             AttributePane attributePane = layout.MainLayout.getRightPanel();
             attributePane.getText_w().setText(Integer.toString(c_size_w));
             attributePane.getText_h().setText(Integer.toString(c_size_h));
-            target_label.setSize(c_size_w, c_size_h);
+
 
 
             label = null;
@@ -281,6 +379,9 @@ class dragLabel extends MouseAdapter{
             node.setY((double) target_label.getLocation().y);
             node.setW((double) c_size_w);
             node.setH((double) c_size_h);
+
+            attributePane.getText_x().setText(Integer.toString((int)node.getX()));
+            attributePane.getText_y().setText(Integer.toString((int)node.getY()));
 
             SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
             setPosition.set_line();
