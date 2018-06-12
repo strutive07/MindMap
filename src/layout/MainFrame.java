@@ -110,7 +110,7 @@ public class MainFrame extends JFrame{
 		JButton loadButton = new JButton("불러오기");
 		loadButton.addActionListener(saveEvent);
 		JButton reSaveButton = new JButton("다른 이름으로 저장");
-
+		reSaveButton.addActionListener(saveEvent);
 		toolBar.add(saveButton);
 		toolBar.add(loadButton);
 		toolBar.add(reSaveButton);
@@ -256,7 +256,7 @@ class ApplyEvent implements ActionListener{
 		JButton loadButton = new JButton("불러오기");
 		loadButton.addActionListener(saveEvent);
 		JButton reSaveButton = new JButton("다른 이름으로 저장");
-
+		reSaveButton.addActionListener(saveEvent);
 		jToolBar.add(saveButton);
 		jToolBar.add(loadButton);
 		jToolBar.add(reSaveButton);

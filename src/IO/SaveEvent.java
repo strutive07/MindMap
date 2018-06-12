@@ -20,9 +20,11 @@ public class SaveEvent implements ActionListener{
         switch (cmd){
             case "저장":
                 boolean isSaved = layout.MainLayout.isSaved();
+                System.out.println("isSaved : " + isSaved);
                 saveMethod(isSaved);
                 break;
             case "다른 이름으로 저장":
+
                 saveMethod(false);
                 break;
             case "불러오기":
@@ -46,7 +48,6 @@ public class SaveEvent implements ActionListener{
         if(!isSaved){
             jFileChooser.setFileFilter(new FileNameExtensionFilter("JSON 파일", "json"));
             return_value = jFileChooser.showSaveDialog(layout.MainLayout.getFrame());
-            layout.MainLayout.setIsSaved(true);
         }else{
             return_value = JFileChooser.APPROVE_OPTION;
         }
@@ -70,6 +71,9 @@ public class SaveEvent implements ActionListener{
             }
 
             layout.MainLayout.getFrame().setTitle("Mind Map - FILE : " + path);
+            if(!isSaved){
+                layout.MainLayout.setIsSaved(true);
+            }
         }
     }
 
@@ -95,7 +99,7 @@ public class SaveEvent implements ActionListener{
             JButton loadButton = new JButton("불러오기");
             loadButton.addActionListener(saveEvent);
             JButton reSaveButton = new JButton("다른 이름으로 저장");
-
+            reSaveButton.addActionListener(saveEvent);
             jToolBar.add(saveButton);
             jToolBar.add(loadButton);
             jToolBar.add(reSaveButton);

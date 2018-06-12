@@ -105,7 +105,7 @@ public class TextEditorPane extends JPanel{
 				JButton loadButton = new JButton("불러오기");
 				loadButton.addActionListener(saveEvent);
 				JButton reSaveButton = new JButton("다른 이름으로 저장");
-
+				reSaveButton.addActionListener(saveEvent);
 				jToolBar.add(saveButton);
 				jToolBar.add(loadButton);
 				jToolBar.add(reSaveButton);
