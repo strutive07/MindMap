@@ -59,7 +59,7 @@ public class SetPosition {
                 double d=now_node.get_lim_angle()/2.0;
                 double limit;
                  if(a!=b) {
-                     limit = 2 * 2 * (Math.PI + Math.atan((b * (1.0 / d) - Math.sqrt(Math.abs(-Math.pow(a, 2.0) + Math.pow(b, 2.0) + Math.pow(b, 2) * Math.pow((1.0) / d, 2.0)))) / (double) (a - b)));
+                     limit = 2 * 2 * (Math.PI + Math.atan((b * (1.0/Math.tan(d)) - Math.sqrt(Math.abs(-Math.pow(a, 2.0) + Math.pow(b, 2.0) + Math.pow(b, 2) * Math.pow((1.0) / d, 2.0)))) / (double) (a - b)));
                  }
                  else
                      limit=Math.PI*2/3.0;
