@@ -59,7 +59,7 @@ public class SetPosition {
                 double d=now_node.get_lim_angle()/2.0;
                 double limit;
                  if(a!=b) {
-                     limit = 2 * 2 * (Math.PI + Math.atan((b * (1.0/Math.tan(d)) - Math.sqrt(Math.abs(-Math.pow(a, 2.0) + Math.pow(b, 2.0) + Math.pow(b, 2) * Math.pow((1.0) / d, 2.0)))) / (double) (a - b)));
+                     limit = 2 * 2 * (Math.PI + Math.atan((b * (1.0/d) - Math.sqrt(Math.abs(-Math.pow(a, 2.0) + Math.pow(b, 2.0) + Math.pow(b, 2.0) * Math.pow((1.0) / d, 2.0)))) / (double) (a - b)));
                  }
                  else
                      limit=Math.PI*2/3.0;
@@ -73,6 +73,9 @@ public class SetPosition {
                     if (lim_angle>limit)
                         lim_angle = limit;
                 }
+
+                if (2*length*Math.sin(lim_angle/2.0)<Math.sqrt(Math.pow(50,2)+Math.pow(31,2))*sibling_cnt && now_node.get_child_number_in_parent()!=-1)
+                    length=(int)(((Math.sqrt(Math.pow(50,2)+Math.pow(31,2))*sibling_cnt)/2.0)/(Math.sin(lim_angle/2.0)))+5;
 
                 for (int i = 0; i < sibling_cnt; i++) {
                     double angle;
