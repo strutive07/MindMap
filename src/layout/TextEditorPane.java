@@ -86,8 +86,8 @@ public class TextEditorPane extends JPanel{
 		ApplyButton.addMouseListener(new MouseAdapter() {
 
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				super.mouseClicked(e);
+			public void mousePressed(MouseEvent e) {
+				super.mousePressed(e);
 				CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
 				MainFrame frame = layout.MainLayout.getFrame();
 				centerPanel.setPreferredSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
@@ -153,9 +153,38 @@ public class TextEditorPane extends JPanel{
 
 	public void makeTree(){
 		int nodeNumber = 0;
+		if(textArea.getText().length() == 0){
+			JOptionPane.showMessageDialog(null,"데이터가 없습니다.", "오류", JOptionPane.ERROR_MESSAGE);
+			layout.MainLayout.getTree().clear();
+			MainFrame frame = layout.MainLayout.getFrame();
+			JPanel centerPanel = MainLayout.getCenterPanel();
+			centerPanel.setPreferredSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
+			centerPanel.setSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
+			centerPanel.removeAll();
+			centerPanel.revalidate();
+			centerPanel.repaint();
+		}
 		String treeText[] = textArea.getText().split("[\n]");
 		Stack<Pair<Integer, treeIO>> st = new Stack<Pair<Integer, treeIO>>();
-
+		
+		if(treeText[0].charAt(0) == '\t'){
+			JOptionPane.showMessageDialog(null,"가장 첫줄은 탭이 없어야 합니다.", "오류", JOptionPane.ERROR_MESSAGE);
+			layout.MainLayout.getTree().clear();
+			MainFrame frame = layout.MainLayout.getFrame();
+			JPanel centerPanel = MainLayout.getCenterPanel();
+			centerPanel.setPreferredSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
+			centerPanel.setSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
+			centerPanel.removeAll();
+			centerPanel.revalidate();
+			centerPanel.repaint();
+			SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
+			setPosition.start_SetPosition();
+			setPosition.set_line();
+			DisplayLabel displayLabel = new DisplayLabel();
+			frame.setNow_selected_root(0);
+			displayLabel.display(frame.getNow_selected_root());
+			return;
+		}
 		treeIO root = new treeIO(treeText[0], nodeNumber++);
 		Pair<Integer, treeIO> first_root = new Pair<Integer, treeIO>(0, root);
 
@@ -174,7 +203,29 @@ public class TextEditorPane extends JPanel{
 				}
 			}
 			treeText[i] = treeText[i].substring(tab_cnt,treeText[i].length());
+			System.out.println("treeText[i] : " + treeText[i]);
+			if(treeText[i].length() == 0){
+				continue;
+			}
 			if(st.peek().left < tab_cnt){
+				if(st.peek().left +1 != tab_cnt){
+					layout.MainLayout.getTree().clear();
+					JOptionPane.showMessageDialog(null,"올바른 데이터를 입력하여 주십시오.", "오류", JOptionPane.ERROR_MESSAGE);
+					MainFrame frame = layout.MainLayout.getFrame();
+					JPanel centerPanel = MainLayout.getCenterPanel();
+					centerPanel.setPreferredSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
+					centerPanel.setSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
+					centerPanel.removeAll();
+					centerPanel.revalidate();
+					centerPanel.repaint();
+					SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
+					setPosition.start_SetPosition();
+					setPosition.set_line();
+					DisplayLabel displayLabel = new DisplayLabel();
+					frame.setNow_selected_root(0);
+					displayLabel.display(frame.getNow_selected_root());
+					return;
+				}
 				treeIO node = new treeIO(treeText[i], nodeNumber++);
 				st.peek().right.push_child(node);
 				Pair<Integer, treeIO> next_node = new Pair<Integer, treeIO>(tab_cnt, node);
@@ -220,20 +271,14 @@ public class TextEditorPane extends JPanel{
 			System.out.println("cnt : " + tab_cnt + " ho : " + treeText[i]);
 		}
 		MainFrame frame = layout.MainLayout.getFrame();
-
 		JPanel centerPanel = MainLayout.getCenterPanel();
 		centerPanel.setPreferredSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
 		centerPanel.setSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
-
-
 		SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
 		setPosition.start_SetPosition();
 		setPosition.set_line();
-
 		DisplayLabel displayLabel = new DisplayLabel();
-
 		frame.setNow_selected_root(0);
-
 		displayLabel.display(frame.getNow_selected_root());
 
 	}
