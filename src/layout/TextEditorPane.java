@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 import IO.SaveEvent;
+import listeners.AttributeApply;
 import util.AutoLabel;
 import util.ColorTable;
 import IO.treeIO;
@@ -106,11 +107,23 @@ public class TextEditorPane extends JPanel{
 				loadButton.addActionListener(saveEvent);
 				JButton reSaveButton = new JButton("다른 이름으로 저장");
 				reSaveButton.addActionListener(saveEvent);
+				JButton resetButton = new JButton("새로 만들기");
+				resetButton.addActionListener(saveEvent);
+				JButton ApplyButton = new JButton("적용");
+				ApplyButton.addActionListener(new ApplyEvent());
+				JButton modifiyButton = new JButton("변경");
+				modifiyButton.addActionListener(new AttributeApply());
+				JButton closeButton = new JButton("닫기");
+				closeButton.addActionListener(new ExitEvent());
+
 				jToolBar.add(saveButton);
 				jToolBar.add(loadButton);
 				jToolBar.add(reSaveButton);
+				jToolBar.add(resetButton);
+				jToolBar.add(ApplyButton);
+				jToolBar.add(modifiyButton);
+				jToolBar.add(closeButton);
 				jToolBar.addSeparator();
-
 
 				for(int i=0; i<root_list.size(); i++){
 					final int idx = i;
@@ -155,6 +168,7 @@ public class TextEditorPane extends JPanel{
 		int nodeNumber = 0;
 		if(textArea.getText().length() == 0){
 			JOptionPane.showMessageDialog(null,"데이터가 없습니다.", "오류", JOptionPane.ERROR_MESSAGE);
+            resetToolBar();
 			layout.MainLayout.getTree().clear();
 			MainFrame frame = layout.MainLayout.getFrame();
 			JPanel centerPanel = MainLayout.getCenterPanel();
@@ -166,9 +180,10 @@ public class TextEditorPane extends JPanel{
 		}
 		String treeText[] = textArea.getText().split("[\n]");
 		Stack<Pair<Integer, treeIO>> st = new Stack<Pair<Integer, treeIO>>();
-		
+
 		if(treeText[0].charAt(0) == '\t'){
 			JOptionPane.showMessageDialog(null,"가장 첫줄은 탭이 없어야 합니다.", "오류", JOptionPane.ERROR_MESSAGE);
+            resetToolBar();
 			layout.MainLayout.getTree().clear();
 			MainFrame frame = layout.MainLayout.getFrame();
 			JPanel centerPanel = MainLayout.getCenterPanel();
@@ -208,9 +223,12 @@ public class TextEditorPane extends JPanel{
 				continue;
 			}
 			if(st.peek().left < tab_cnt){
-				if(st.peek().left +1 != tab_cnt){
+				if(st.peek().left + 1 != tab_cnt){
+					System.out.println( (st.peek().left + 1)+ " | "+tab_cnt);
+					System.out.println(st.peek());
 					layout.MainLayout.getTree().clear();
 					JOptionPane.showMessageDialog(null,"올바른 데이터를 입력하여 주십시오.", "오류", JOptionPane.ERROR_MESSAGE);
+                    resetToolBar();
 					MainFrame frame = layout.MainLayout.getFrame();
 					JPanel centerPanel = MainLayout.getCenterPanel();
 					centerPanel.setPreferredSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
@@ -282,7 +300,34 @@ public class TextEditorPane extends JPanel{
 		displayLabel.display(frame.getNow_selected_root());
 
 	}
+	public void resetToolBar(){
+        JToolBar jToolBar = layout.MainLayout.getFrame().getToolBar();
+        jToolBar.removeAll();
 
+        SaveEvent saveEvent = new SaveEvent();
+        JButton saveButton = new JButton("저장");
+        saveButton.addActionListener(saveEvent);
+        JButton loadButton = new JButton("불러오기");
+        loadButton.addActionListener(saveEvent);
+        JButton reSaveButton = new JButton("다른 이름으로 저장");
+        reSaveButton.addActionListener(saveEvent);
+        JButton resetButton = new JButton("새로 만들기");
+        resetButton.addActionListener(saveEvent);
+        JButton ApplyButton = new JButton("적용");
+        ApplyButton.addActionListener(new ApplyEvent());
+        JButton modifiyButton = new JButton("변경");
+        modifiyButton.addActionListener(new AttributeApply());
+        JButton closeButton = new JButton("닫기");
+        closeButton.addActionListener(new ExitEvent());
+
+        jToolBar.add(saveButton);
+        jToolBar.add(loadButton);
+        jToolBar.add(reSaveButton);
+        jToolBar.add(resetButton);
+        jToolBar.add(ApplyButton);
+        jToolBar.add(modifiyButton);
+        jToolBar.add(closeButton);
+    }
 }
 
 

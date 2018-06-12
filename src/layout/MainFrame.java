@@ -12,6 +12,7 @@ import javax.swing.*;
 import IO.SaveEvent;
 import IO.treeIO;
 import algorithm.DisplayLabel;
+import algorithm.SetPosition;
 import com.sun.java.swing.action.ApplyAction;
 import listeners.AttributeApply;
 import sun.plugin.javascript.JSContext;
@@ -111,9 +112,22 @@ public class MainFrame extends JFrame{
 		loadButton.addActionListener(saveEvent);
 		JButton reSaveButton = new JButton("다른 이름으로 저장");
 		reSaveButton.addActionListener(saveEvent);
+		JButton resetButton = new JButton("새로 만들기");
+		resetButton.addActionListener(saveEvent);
+		JButton ApplyButton = new JButton("적용");
+		ApplyButton.addActionListener(new ApplyEvent());
+		JButton modifiyButton = new JButton("변경");
+		modifiyButton.addActionListener(new AttributeApply());
+		JButton closeButton = new JButton("닫기");
+		closeButton.addActionListener(new ExitEvent());
+
 		toolBar.add(saveButton);
 		toolBar.add(loadButton);
 		toolBar.add(reSaveButton);
+		toolBar.add(resetButton);
+		toolBar.add(ApplyButton);
+		toolBar.add(modifiyButton);
+		toolBar.add(closeButton);
 		getContentPane().add(toolBar, BorderLayout.NORTH);
 
 
@@ -221,6 +235,11 @@ public class MainFrame extends JFrame{
 		leftPanel.setTopLabelFontSize((int)this.getSize().getWidth()/6);
 		rightPanel.setTopLabelFontSize((int)this.getSize().getWidth()/6);
 		CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+
+		SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
+		setPosition.set_line();
+
+
 		centerPanel.setFinish(now_selected_root);
 	}
 }
@@ -235,72 +254,7 @@ public class MainFrame extends JFrame{
 //	}
 //}
 
-class ApplyEvent implements ActionListener{
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
-		MainFrame frame = layout.MainLayout.getFrame();
-		centerPanel.setPreferredSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
-		centerPanel.setSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
-
-		layout.MainLayout.getLeftPanel().makeTree();
-
-		ArrayList<treeIO> root_list = layout.MainLayout.getTree();
-		JToolBar jToolBar = layout.MainLayout.getFrame().getToolBar();
-		jToolBar.removeAll();
-
-		SaveEvent saveEvent = new SaveEvent();
-		JButton saveButton = new JButton("저장");
-		saveButton.addActionListener(saveEvent);
-		JButton loadButton = new JButton("불러오기");
-		loadButton.addActionListener(saveEvent);
-		JButton reSaveButton = new JButton("다른 이름으로 저장");
-		reSaveButton.addActionListener(saveEvent);
-		jToolBar.add(saveButton);
-		jToolBar.add(loadButton);
-		jToolBar.add(reSaveButton);
-		jToolBar.addSeparator();
 
 
-		for(int i=0; i<root_list.size(); i++){
-			final int idx = i;
-			JButton root_button = new JButton("마인드맵 " + (i + 1));
-			root_button.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					DisplayLabel displayLabel = new DisplayLabel();
-					frame.setNow_selected_root(idx);
-					displayLabel.display(frame.getNow_selected_root());
-					layout.MainLayout.getCenterPanel().setExtensionPoint(null);
-					layout.MainLayout.getCenterPanel().setSelected_Label(null);
-					layout.MainLayout.getCenterPanel().setSelected_Node(null);
 
-					AttributePane attributePane = layout.MainLayout.getRightPanel();
-					attributePane.getText_TEXT().setText("");
-					attributePane.getText_x().setText("");
-					attributePane.getText_y().setText("");
-					attributePane.getText_w().setText("");
-					attributePane.getText_h().setText("");
-					attributePane.getText_color().setText("");
-				}
-			});
-			jToolBar.add(root_button);
-		}
-		jToolBar.revalidate();
-		jToolBar.repaint();
-
-		layout.MainLayout.getCenterPanel().setExtensionPoint(null);
-		layout.MainLayout.getCenterPanel().setSelected_Label(null);
-		layout.MainLayout.getCenterPanel().setSelected_Node(null);
-	}
-}
-
-class ExitEvent implements ActionListener{
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		System.exit(0);
-	}
-}
 

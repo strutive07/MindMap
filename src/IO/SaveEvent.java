@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import algorithm.DisplayLabel;
 import algorithm.SetPosition;
 import layout.*;
+import listeners.AttributeApply;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -100,9 +101,22 @@ public class SaveEvent implements ActionListener{
             loadButton.addActionListener(saveEvent);
             JButton reSaveButton = new JButton("다른 이름으로 저장");
             reSaveButton.addActionListener(saveEvent);
+            JButton resetButton = new JButton("새로 만들기");
+            resetButton.addActionListener(saveEvent);
+            JButton ApplyButton = new JButton("적용");
+            ApplyButton.addActionListener(new ApplyEvent());
+            JButton modifiyButton = new JButton("변경");
+            modifiyButton.addActionListener(new AttributeApply());
+            JButton closeButton = new JButton("닫기");
+            closeButton.addActionListener(new ExitEvent());
+
             jToolBar.add(saveButton);
             jToolBar.add(loadButton);
             jToolBar.add(reSaveButton);
+            jToolBar.add(resetButton);
+            jToolBar.add(ApplyButton);
+            jToolBar.add(modifiyButton);
+            jToolBar.add(closeButton);
             jToolBar.addSeparator();
 
 
@@ -134,21 +148,22 @@ public class SaveEvent implements ActionListener{
             jToolBar.revalidate();
             jToolBar.repaint();
 
-
-
+            CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
+            SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
+            setPosition.set_line();
+            layout.MainLayout.getFrame().setNow_selected_root(0);
             DisplayLabel displayLabel = new DisplayLabel();
             displayLabel.display(0);
             String file_name = jFileChooser.getSelectedFile().getName();
             layout.MainLayout.getFrame().setTitle("Mind Map - FILE : " + file_name);
 
-            CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
-            SetPosition setPosition = new SetPosition(centerPanel.getSize().getWidth(), centerPanel.getSize().getHeight());
-            setPosition.set_line();
-            centerPanel.setFinish(0);
+
+//            centerPanel.setFinish(0);
 
             layout.MainLayout.setFilePath(path);
             layout.MainLayout.getFrame().setTitle("Mind Map - FILE : " + path);
             layout.MainLayout.setIsSaved(true);
+
         }
     }
     private void resetMethod(){
@@ -186,10 +201,24 @@ public class SaveEvent implements ActionListener{
         JButton loadButton = new JButton("불러오기");
         loadButton.addActionListener(saveEvent);
         JButton reSaveButton = new JButton("다른 이름으로 저장");
+        reSaveButton.addActionListener(saveEvent);
+        JButton resetButton = new JButton("새로 만들기");
+        resetButton.addActionListener(saveEvent);
+        JButton ApplyButton = new JButton("적용");
+        ApplyButton.addActionListener(new ApplyEvent());
+        JButton modifiyButton = new JButton("변경");
+        modifiyButton.addActionListener(new AttributeApply());
+        JButton closeButton = new JButton("닫기");
+        closeButton.addActionListener(new ExitEvent());
 
         jToolBar.add(saveButton);
         jToolBar.add(loadButton);
         jToolBar.add(reSaveButton);
+        jToolBar.add(resetButton);
+        jToolBar.add(ApplyButton);
+        jToolBar.add(modifiyButton);
+        jToolBar.add(closeButton);
+        jToolBar.addSeparator();
 
         jToolBar.revalidate();
         jToolBar.repaint();
