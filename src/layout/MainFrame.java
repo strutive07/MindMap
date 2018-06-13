@@ -56,6 +56,12 @@ public class MainFrame extends JFrame{
 			public void componentResized(ComponentEvent e) {
 				JFrameResize();
 			}
+			@Override
+			public void componentMoved(ComponentEvent arg0) {
+				// TODO Auto-generated method stub
+				super.componentMoved(arg0);
+				JFrameResize();
+			}
 		});
 		setVisible(true);
 	}
