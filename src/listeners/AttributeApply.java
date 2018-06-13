@@ -23,10 +23,6 @@ public class AttributeApply extends MouseAdapter implements ActionListener{
         action();
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        action();
-    }
 
     private void action(){
         AttributePane attributePane = layout.MainLayout.getRightPanel();
@@ -81,4 +77,10 @@ public class AttributeApply extends MouseAdapter implements ActionListener{
         MainFrame frame = layout.MainLayout.getFrame();
         centerPanel.setFinish(frame.getNow_selected_root());
     }
+
+
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		action();
+	}
 }

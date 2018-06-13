@@ -13,9 +13,7 @@ import IO.SaveEvent;
 import IO.treeIO;
 import algorithm.DisplayLabel;
 import algorithm.SetPosition;
-import com.sun.java.swing.action.ApplyAction;
 import listeners.AttributeApply;
-import sun.plugin.javascript.JSContext;
 import util.ColorTable;
 
 public class MainFrame extends JFrame{
@@ -142,7 +140,7 @@ public class MainFrame extends JFrame{
 		JScrollPane leftScrollPanel = new JScrollPane(leftPanel);
 		
 		
-        CenterPanel centerPanel = MainLayout.getCenterPanel();
+        final CenterPanel centerPanel = MainLayout.getCenterPanel();
 
         centerPanel.setSize( 2 * (int)this.getSize().getWidth() * 2, (int)this.getSize().getHeight() * 2);
         centerPanel.setPreferredSize(new Dimension( 2 * (int)this.getSize().getWidth()/3, (int)this.getSize().getHeight()));
@@ -191,17 +189,15 @@ public class MainFrame extends JFrame{
         layout.MainLayout.setRightPanel(rightPanel);
 
         JScrollPane rightScrollPanel = new JScrollPane(rightPanel);
-        MainFrame frame = this;
+        final MainFrame frame = this;
 
 		centerScrollPanel.getHorizontalScrollBar().addAdjustmentListener(new AdjustmentListener() {
-			@Override
 			public void adjustmentValueChanged(AdjustmentEvent e) {
 				CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
 				centerPanel.setFinish(frame.getNow_selected_root());
 			}
 		});
 		centerScrollPanel.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
-			@Override
 			public void adjustmentValueChanged(AdjustmentEvent e) {
 				CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
 				centerPanel.setFinish(frame.getNow_selected_root());

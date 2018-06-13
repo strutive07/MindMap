@@ -90,7 +90,7 @@ public class TextEditorPane extends JPanel{
 			public void mousePressed(MouseEvent e) {
 				super.mousePressed(e);
 				CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
-				MainFrame frame = layout.MainLayout.getFrame();
+				final MainFrame frame = layout.MainLayout.getFrame();
 				centerPanel.setPreferredSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
 				centerPanel.setSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
 
@@ -129,8 +129,9 @@ public class TextEditorPane extends JPanel{
 					final int idx = i;
 					JButton root_button = new JButton("마인드맵 " + (i + 1));
 					root_button.addActionListener(new ActionListener() {
-						@Override
+
 						public void actionPerformed(ActionEvent e) {
+							// TODO Auto-generated method stub
 							DisplayLabel displayLabel = new DisplayLabel();
 							frame.setNow_selected_root(idx);
 							displayLabel.display(frame.getNow_selected_root());
@@ -146,7 +147,9 @@ public class TextEditorPane extends JPanel{
 							attributePane.getText_h().setText("");
 							attributePane.getText_color().setText("");
 						}
+						
 					});
+					
 					jToolBar.add(root_button);
 				}
 				jToolBar.revalidate();

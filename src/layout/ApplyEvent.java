@@ -12,10 +12,9 @@ import java.util.ArrayList;
 
 public class ApplyEvent implements ActionListener {
 
-    @Override
     public void actionPerformed(ActionEvent e) {
         CenterPanel centerPanel = layout.MainLayout.getCenterPanel();
-        MainFrame frame = layout.MainLayout.getFrame();
+        final MainFrame frame = layout.MainLayout.getFrame();
         centerPanel.setPreferredSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
         centerPanel.setSize(new Dimension( 2 * (int)frame.getSize().getWidth()/3, (int)frame.getHeight()));
 
@@ -42,7 +41,6 @@ public class ApplyEvent implements ActionListener {
             final int idx = i;
             JButton root_button = new JButton("마인드맵 " + (i + 1));
             root_button.addActionListener(new ActionListener() {
-                @Override
                 public void actionPerformed(ActionEvent e) {
                     DisplayLabel displayLabel = new DisplayLabel();
                     frame.setNow_selected_root(idx);
